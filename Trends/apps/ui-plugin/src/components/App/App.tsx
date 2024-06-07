@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
+import styles from './app.css';
 
 import NxWelcome from './nx-welcome';
 
-export function App() {
+export const App = () => {
   return (
     <div>
       <NxWelcome title="ui-plugin" />
@@ -11,4 +11,3 @@ export function App() {
   );
 }
 
-export default App;
