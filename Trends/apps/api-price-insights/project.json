@@ -1,0 +1,56 @@
+{
+  "name": "api-price-insights",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api-price-insights/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/api-price-insights",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/api-price-insights/src/main.ts",
+        "tsConfig": "apps/api-price-insights/tsconfig.app.json",
+        "assets": ["apps/api-price-insights/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api-price-insights:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api-price-insights:build:development"
+        },
+        "production": {
+          "buildTarget": "api-price-insights:build:production"
+        }
+      }
+    }
+  }
+}
