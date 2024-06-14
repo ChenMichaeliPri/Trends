@@ -1,4 +1,4 @@
-import {ChartData} from "./Chart";
+import {ChartData} from "./chart.types";
 
 export const CustomDot = ({cx,cy,payload}:any)=>{
   const {recommendedDate ,avoidDate } = payload as ChartData;

@@ -1,4 +1,4 @@
-import {ChartData} from "./Chart";
+import {ChartData} from "./chart.types";
 
 export const chartDataMock:ChartData[] = [
   { date: '01-01-23', price: 120 },

@@ -1,13 +1,8 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from 'recharts';
 
 import {CustomDot} from "./CustomDot";
+import {ChartData} from "./chart.types";
 
-export type ChartData={
-  date:string;
-  price:number;
-  recommendedDate?:boolean;
-  avoidDate?:boolean;
-}
 
 type ChartProps={
   data:ChartData[]

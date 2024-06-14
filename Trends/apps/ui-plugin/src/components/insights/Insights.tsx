@@ -1,12 +1,7 @@
 import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
 import ThumbDownAltSharpIcon from '@mui/icons-material/ThumbDownAltSharp';
-
-export type InsightsData={
-  text:string;
-  date:string;
-  advice:boolean;
-}
+import {InsightsData} from "./insights.types";
 
 type InsightsProps={
   items:InsightsData[];
@@ -15,12 +10,12 @@ type InsightsProps={
 export const Insights = ({items}:InsightsProps) =>{
   return(
     <List sx={{ width: 300, height:185 ,overflowY:'scroll'}}>
-      {items.map((item,index)=>(
-        <ListItem key={index}>
+      {items.map(({id,shouldPurchase,date,text})=>(
+        <ListItem key={id}>
           <ListItemIcon>
-            {item.advice? <ThumbUpAltSharpIcon/> : <ThumbDownAltSharpIcon/> }
+            {shouldPurchase? <ThumbUpAltSharpIcon/> : <ThumbDownAltSharpIcon/> }
           </ListItemIcon>
-          <ListItemText primary={item.text} secondary={item.date}/>
+          <ListItemText primary={text} secondary={date}/>
         </ListItem>
       ))}
     </List>
