@@ -12,17 +12,18 @@ export type MainPageProps = {
   onClick:()=>void;
 }
 export const MainPage= ({productName,showTrends,onClick}:MainPageProps) => {
-  const chartData = useChart();
+  const chartProps = useChart();
   const insightsData = useInsights();
+
   return (
-    <Card >
+    <Card>
       <CardHeader
         title={MAIN_PAGE.TITLE_TEXT}
         subheader={MAIN_PAGE.SUBHEADER_TEXT.replace('{productName}',productName)}
       />
-      <CardContent>
+      <CardContent >
         {showTrends
-          ? <Chart data={chartData}/>
+          ? <Chart {...chartProps}/>
           : <Insights items={insightsData}/>
         }
       </CardContent>

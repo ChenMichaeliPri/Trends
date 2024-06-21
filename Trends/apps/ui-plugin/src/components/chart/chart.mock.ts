@@ -1,5 +1,9 @@
 import {ChartData} from "./chart.types";
 
+export const minPriceMock = 1000;
+export const maxPriceMock = 3000;
+export const averagePriceMock= 2000;
+export const varianceMock=100;
 export const chartDataMock:ChartData[] = [
   { date: '01-01-23', price: 120 },
   { date: '02-01-23', price: 119 },
