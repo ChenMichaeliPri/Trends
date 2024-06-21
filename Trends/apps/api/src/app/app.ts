@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { FastifyInstance } from 'fastify';
+import { fastifyMysql } from '@fastify/mysql';
 import AutoLoad from '@fastify/autoload';
 
 /* eslint-disable-next-line */
@@ -7,6 +8,15 @@ export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
   // Place here your custom code!
+
+  // DB access
+  fastify.register(fastifyMysql, {
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    database: 'trends',
+    promise: true
+  })
 
   // Do not touch the following lines
 
