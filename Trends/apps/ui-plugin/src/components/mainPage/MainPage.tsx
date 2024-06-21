@@ -21,7 +21,7 @@ export const MainPage= ({productName,showTrends,onClick}:MainPageProps) => {
         title={MAIN_PAGE.TITLE_TEXT}
         subheader={MAIN_PAGE.SUBHEADER_TEXT.replace('{productName}',productName)}
       />
-      <CardContent >
+      <CardContent sx={{paddingTop:0}}>
         {showTrends
           ? <Chart {...chartProps}/>
           : <Insights items={insightsData}/>

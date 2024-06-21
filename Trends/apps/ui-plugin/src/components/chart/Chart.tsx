@@ -29,7 +29,7 @@ export const Chart = ({data,minPrice,maxPrice,averagePrice,variance}:ChartProps)
         <Typography>{CHART.VARIANCE_TEXT.replace('{variance}',variance.toString())}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <LineChart width={300} height={200} data={data}  >
+        <LineChart width={350} height={200} data={data}  >
           <Line type="monotone" dataKey="price" dot={(props:CustomDotProps)=><CustomDot {...props}/>}/>
           <CartesianGrid strokeDasharray="5 5" />
           <XAxis dataKey="date" />
