@@ -5,7 +5,9 @@ import { MySQLRowDataPacket } from "@fastify/mysql";
 export const getProducts = async (fastify: FastifyInstance, id: number | null = null, name: string | null = null): Promise<Product[]> => {
     try {
         const products = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getProductsQuery(id, name)))[0];
-        return products.map(p => p as Product);
+        return products.map(p => {
+            return { id: p.product_id, name: p.name, insights: p.insights } as Product
+        });
     }
     catch(error) {
         console.log(error);
@@ -29,7 +31,9 @@ export const getProducts = async (fastify: FastifyInstance, id: number | null = 
 export const getShops = async (fastify: FastifyInstance, id: number | null = null, name: string | null = null): Promise<Shop[]> => {
     try {
         const shops = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getShopsQuery(id, name)))[0];
-        return shops.map(p => p as Shop);
+        return shops.map(s => {
+            return { id: s.shop_id, name: s.name } as Shop
+        });
     }
     catch(error) {
         console.log(error);
@@ -51,7 +55,9 @@ export const getProductsShops = async (fastify: FastifyInstance): Promise<Produc
     try {
         // Each row in the results represenets a productId and shopId which the product sales at
         const productShopResults = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getProductShopsQuery))[0];
-        const productShopResultsParsed = productShopResults.map(p => p as ProductShop);
+        const productShopResultsParsed = productShopResults.map(p => {
+            return { productId: p.product_id, shopId: p.shop_id } as ProductShop
+        });
 
         const productShopsMap: Map<number, Set<number>> = new Map();
 
@@ -97,7 +103,9 @@ export const getPriceRecords = async (
 ): Promise<PriceRecord[]> => {
     try {
         const records = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getRecordQuery()))[0];
-        return records.map(p => p as PriceRecord);
+        return records.map(p => {
+            return { id: p.price_record_id, productId: p.product_id, shopId: p.shop_id, price: p.price, timestamp: p.timestamp } as PriceRecord
+        });
     }
     catch(error) {
         console.log(error);
