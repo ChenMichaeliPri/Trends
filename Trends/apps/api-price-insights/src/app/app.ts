@@ -1,15 +1,13 @@
 import * as path from 'path';
 import { FastifyInstance } from 'fastify';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import AutoLoad from '@fastify/autoload';
+import { calculateRoutes } from './routes/calculate'
 
-/* eslint-disable-next-line */
 export interface AppOptions {}
 
 export async function app(fastify: FastifyInstance, opts: AppOptions) {
-  // Place here your custom code!
-
-  // Do not touch the following lines
-
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
@@ -24,4 +22,23 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
     dir: path.join(__dirname, 'routes'),
     options: { ...opts },
   });
+
+  fastify.register(fastifySwagger, {
+    swagger: {
+        info: {
+            title: 'Price Insights Job',
+            version: '1.0.0'
+        },
+    }
+});
+
+// @ts-ignore
+fastify.register(fastifySwaggerUi, {
+    routePrefix: '/swagger',
+    exposeRoute: true
+});
+
+fastify.register(calculateRoutes, {
+  prefix: '/api/calculate'
+});
 }
