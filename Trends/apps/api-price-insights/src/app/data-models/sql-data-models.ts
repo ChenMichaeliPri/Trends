@@ -10,14 +10,14 @@ interface Shop {
 }
 
 interface ProductShops {
-    product_id: number;
-    shop_ids: number[];
+    productId: number;
+    shopIds: number[];
 }
 
 interface PriceRecord {
     id: number;
-    product_id: number;
-    shop_id: number;
+    productId: number;
+    shopId: number;
     price: number;
     timestamp: Date;
 }
