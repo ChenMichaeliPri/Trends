@@ -13,7 +13,7 @@ export const getProducts = (id: number | null = null, name: string | null = null
     ].filter(product => (id === null || product.id === id) && (name === null || product.name === name));
 };
 
-export const getShops = (id: number | null = null, name: string | null = null): Shop[] => {
+export const getShops = async (id: number | null = null, name: string | null = null): Promise<Shop[]> => {
     return [
         {
             id: 1,

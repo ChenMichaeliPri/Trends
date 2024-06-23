@@ -1,0 +1,46 @@
+{
+	productId: number 
+	min: number
+	max: number
+	average: number
+	variance: number
+	data: {
+		amazon: [{date: string, price: number, isRecomended?: boolean, shouldAvoid?: boolean}],
+		aliExpress: [{date: string, price: number, isRecomended?: boolean, shouldAvoid?: boolean}]
+		}
+	insights: [{id: number, text: string, dates: string}]
+}
+
+
+
+SQL api contract
+
+item data model
+id: number
+name: string
+insights: string (representing a json)
+
+shop data model
+id: number
+name: string
+
+item_shop
+item_id: number
+shop_ids: number[]
+
+record data model
+id: number
+item_id: number
+shop_id: number
+price: float
+timestamp: date
+
+getItems(id: null, name: null) -> item[]
+
+getShops(id: null, name: null) -> shop[]
+
+getItemShops() -> item_shop[]
+
+getRecords(item_id: null, shop_id: null, from_date: null, to_date: null) -> record[]
+
+updateItemInsightsById(item_id, insights(string))

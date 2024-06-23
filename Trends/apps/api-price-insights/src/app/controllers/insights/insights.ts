@@ -1,12 +1,13 @@
 import { getProductStatistics } from './insights-logic';
 import { SUCCESS } from '../../consts'
-import { getProductsShops, getPriceRecords } from '../../data-managers/sql-data-providers';
+import { getProductsShops, getPriceRecords, getShops } from '../../data-managers/sql-data-providers';
 import { updateProductInsightsById } from '../../data-managers/sql-data-updaters';
 
-export const postInsightsHandler = (request, reply) => {
+export const postInsightsHandler = async (request, reply) => {
     const TO_DATE = new Date();
     const FROM_DATE = new Date(new Date().setFullYear(new Date().getFullYear() - 3));
 
+    const dbShopsData = await getShops();
     const productShops = getProductsShops();
     productShops.forEach(metadata => {
         const shopToPricesData = {};
@@ -16,7 +17,7 @@ export const postInsightsHandler = (request, reply) => {
             shopToPricesData[shopId] = getPriceRecords(productId, shopId, FROM_DATE, TO_DATE);
         });
         
-        const productStatistics = JSON.stringify(getProductStatistics(productId, shopIds, shopToPricesData));
+        const productStatistics = JSON.stringify(getProductStatistics(productId, shopIds, dbShopsData, shopToPricesData));
 
         updateProductInsightsById(productId, productStatistics);
     });
