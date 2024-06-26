@@ -2,8 +2,6 @@ import { MySQLPromisePool } from '@fastify/mysql'
 import { DB_QUERIES } from '../../db/consts';
 import { MySQLRowDataPacket } from "@fastify/mysql";
 import { FastifyInstance } from "fastify";
-import { number } from 'mathjs';
-
 
 
 declare module 'fastify' {

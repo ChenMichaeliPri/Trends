@@ -1,6 +1,7 @@
 import { generateGetDbCreateHandler } from "../controllers/db/create";
+import { generateGetDbPopulateHandler } from "../controllers/db/populate";
 
-const getCreateDbRouteOpts = {
+const getDbRouteOpts = {
     schema: {
       response: {
         200: {
@@ -12,7 +13,8 @@ const getCreateDbRouteOpts = {
 
 export const dbRoutes = (fastify, options, done) => {
     const getDbCreateHandler = generateGetDbCreateHandler(fastify);
-    fastify.get('/create', getCreateDbRouteOpts, getDbCreateHandler);
-
+    const getDbPopulateHandler = generateGetDbPopulateHandler(fastify);
+    fastify.get('/create', getDbRouteOpts, getDbCreateHandler);
+    fastify.get('/populate', getDbRouteOpts, getDbPopulateHandler);
     done();
 };
