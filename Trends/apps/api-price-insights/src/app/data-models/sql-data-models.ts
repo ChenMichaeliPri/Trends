@@ -21,3 +21,8 @@ interface PriceRecord {
     price: number;
     timestamp: Date;
 }
+
+interface ProductShop { // Represent a product that is selled in a store
+    productId: number;
+    shopId: number;
+}
