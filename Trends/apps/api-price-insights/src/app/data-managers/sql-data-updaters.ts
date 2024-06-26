@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import { dbConsts } from "../db/consts";
+import { DB_QUERIES } from "../db/consts";
 
 export const updateProductInsightsById = async (fastify: FastifyInstance, productId: number, insights: string): Promise<boolean> => {
     try {
-        await fastify.mysql.execute(dbConsts.updateInsightsQuery(productId, insights));
+        await fastify.mysql.execute(DB_QUERIES.updateInsightsQuery(productId, insights));
         return true;
     }
     catch(error) {

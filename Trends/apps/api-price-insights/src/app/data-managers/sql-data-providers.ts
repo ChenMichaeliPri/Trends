@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { dbConsts } from "../db/consts";
+import { DB_QUERIES } from "../db/consts";
 import { MySQLRowDataPacket } from "@fastify/mysql";
 
 export const getProducts = async (fastify: FastifyInstance, id: number | null = null, name: string | null = null): Promise<Product[]> => {
     try {
-        const products = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getProductsQuery(id, name)))[0];
+        const products = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getProductsQuery(id, name)))[0];
         return products.map(p => {
             return { id: p.product_id, name: p.name, insights: p.insights } as Product
         });
@@ -30,7 +30,7 @@ export const getProducts = async (fastify: FastifyInstance, id: number | null = 
 
 export const getShops = async (fastify: FastifyInstance, id: number | null = null, name: string | null = null): Promise<Shop[]> => {
     try {
-        const shops = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getShopsQuery(id, name)))[0];
+        const shops = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getShopsQuery(id, name)))[0];
         return shops.map(s => {
             return { id: s.shop_id, name: s.name } as Shop
         });
@@ -54,7 +54,7 @@ export const getShops = async (fastify: FastifyInstance, id: number | null = nul
 export const getProductsShops = async (fastify: FastifyInstance): Promise<ProductShops[]> => {
     try {
         // Each row in the results represenets a productId and shopId which the product sales at
-        const productShopResults = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getProductShopsQuery))[0];
+        const productShopResults = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getProductShopsQuery))[0];
         const productShopResultsParsed = productShopResults.map(p => {
             return { productId: p.product_id, shopId: p.shop_id } as ProductShop
         });
@@ -102,9 +102,14 @@ export const getPriceRecords = async (
     toDate: Date | null = new Date()
 ): Promise<PriceRecord[]> => {
     try {
-        const records = (await fastify.mysql.execute<MySQLRowDataPacket[]>(dbConsts.getRecordQuery()))[0];
+        const records = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getRecordQuery()))[0];
         return records.map(p => {
-            return { id: p.price_record_id, productId: p.product_id, shopId: p.shop_id, price: p.price, timestamp: p.timestamp } as PriceRecord
+            return { 
+                id: p.price_record_id,
+                productId: p.product_id,
+                shopId: p.shop_id,
+                price: p.price,
+                timestamp: p.timestamp } as PriceRecord
         });
     }
     catch(error) {

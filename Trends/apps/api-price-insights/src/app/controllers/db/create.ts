@@ -1,5 +1,5 @@
 import { MySQLPromisePool } from '@fastify/mysql'
-import { dbConsts } from '../../db/consts';
+import { DB_QUERIES } from '../../db/consts';
 
 declare module 'fastify' {
     interface FastifyInstance {
@@ -11,7 +11,7 @@ export function generateGetDbCreateHandler(fastify){
   return async (request, reply) => {
     let logMessage = '';
     try{
-      await fastify.mysql.execute(dbConsts.createProductTable);
+      await fastify.mysql.execute(DB_QUERIES.createProductTable);
       logMessage += 'created product table\n';
     }
     catch(error) {
@@ -19,7 +19,7 @@ export function generateGetDbCreateHandler(fastify){
       console.log(error);
     }
     try{
-      await fastify.mysql.execute(dbConsts.createShopTable);
+      await fastify.mysql.execute(DB_QUERIES.createShopTable);
       logMessage += 'created shop table\n';
     }
     catch(error) {
@@ -27,7 +27,7 @@ export function generateGetDbCreateHandler(fastify){
       console.log(error);
     }
     try{
-      await fastify.mysql.execute(dbConsts.createRecordTable);
+      await fastify.mysql.execute(DB_QUERIES.createRecordTable);
       logMessage += 'created price_record table\n';
     }
     catch(error) {

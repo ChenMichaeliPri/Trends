@@ -1,4 +1,4 @@
-export const dbConsts = {
+export const DB_QUERIES = {
     createProductTable : `
     CREATE TABLE product (
         product_id INT PRIMARY KEY,
@@ -24,19 +24,19 @@ export const dbConsts = {
     SELECT product_id, shop_id FROM price_record
     GROUP BY product_id, shop_id;
     `,
-    insertProductQuery: (productName, insights) => `
+    insertProductQuery: (productName, insights) : string => `
         INSERT INTO product (name, insights)
         VALUES ('${productName}', '${insights}');
     `,
-    insertShopQuery: (shopName) => `
+    insertShopQuery: (shopName) : string => `
         INSERT INTO shop (name)
         VALUES ('${shopName}');
     `,
-    insertRecordQuery: (productId, shopId, price) => `
+    insertRecordQuery: (productId, shopId, price) : string => `
         INSERT INTO price_record (product_id, shop_id, price)
         VALUES (${productId}, ${shopId}, ${price});
     `,
-    getProductsQuery: (productId = null, name = null) => {
+    getProductsQuery: (productId = null, name = null) : string => {
         let baseQuery = 'SELECT * FROM product';
         let whereFilter = ' WHERE 1=1';
         if(productId){
@@ -47,7 +47,7 @@ export const dbConsts = {
         }
         return baseQuery + whereFilter;
     },
-    getShopsQuery: (shopId, name) => {
+    getShopsQuery: (shopId, name) : string => {
         let baseQuery = 'SELECT * FROM shop';
         let whereFilter = ' WHERE 1=1';
         if(shopId){
@@ -62,7 +62,7 @@ export const dbConsts = {
         productId: number | null = null,
         shopId: number | null = null,
         fromDate: Date | null = new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-        toDate: Date | null = new Date()) => {
+        toDate: Date | null = new Date()) : string => {
         let baseQuery = 'SELECT * FROM price_record';
         let whereFilter = ' WHERE 1=1';
         if(productId){
@@ -80,7 +80,7 @@ export const dbConsts = {
         console.log(whereFilter);
         return baseQuery + whereFilter;
     },
-    updateInsightsQuery: (productId: number, insights: string) => `
+    updateInsightsQuery: (productId: number, insights: string) : string => `
         UPDATE product
         SET insights = '${insights}' WHERE product_id = ${productId};
     `
