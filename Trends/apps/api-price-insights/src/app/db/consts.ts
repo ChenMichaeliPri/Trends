@@ -8,7 +8,8 @@ export const DB_QUERIES = {
     createShopTable : `
     CREATE TABLE shop (
         shop_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL
+        name VARCHAR(255) NOT NULL,
+        UNIQUE (name)
         );`,
     createRecordTable : `
     CREATE TABLE price_record (
@@ -83,5 +84,44 @@ export const DB_QUERIES = {
     updateInsightsQuery: (productId: number, insights: string) : string => `
         UPDATE product
         SET insights = '${insights}' WHERE product_id = ${productId};
-    `
+    `,
+    insertProductsQuery: (products: Product[]): string => {
+        let productsString = '';
+        products.forEach(product => {
+            productsString += `(${product.id}, "${product.name}", "${product.insights}"),`            
+        });
+
+        productsString = productsString.slice(0,-1); // Remove last ','
+
+        return `
+        INSERT INTO product (product_id, name, insights)
+        VALUES ${productsString};
+        `;
+    },
+    insertShopsQuery: (shops: Shop[]): string => {
+        let shopsString = '';
+        shops.forEach(shop => {
+            shopsString += `("${shop.name}"),`            
+        });
+
+        shopsString = shopsString.slice(0,-1); // Remove last ','
+
+        return `
+        INSERT INTO shop (name)
+        VALUES ${shopsString};
+        `;
+    },
+    insertPriceRecordQuery: (priceRecords: PriceRecord[]): string => {
+        let priceRecordsString = '';
+        priceRecords.forEach(priceRecord => {
+            priceRecordsString += `(${priceRecord.productId}, ${priceRecord.shopId}, ${priceRecord.price}, "${priceRecord.timestamp.toISOString().slice(0, 19).replace('T', ' ')}"),`
+        });
+
+        priceRecordsString = priceRecordsString.slice(0,-1); // Remove last ','
+
+        return `
+        INSERT INTO price_record (product_id, shop_id, price, timestamp)
+        VALUES ${priceRecordsString};
+        `;
+    }
 }
