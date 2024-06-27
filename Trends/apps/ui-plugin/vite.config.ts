@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import { resolve } from 'path';
 
 export default defineConfig({
   root: __dirname,
@@ -25,6 +26,17 @@ export default defineConfig({
   // },
 
   build: {
+    rollupOptions: {
+      input: {
+        background: resolve(__dirname, 'src/background.ts'),
+        popup: resolve(__dirname, 'index.html'),
+      },
+      output: {
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name].[ext]',
+      },
+    },
     outDir: '../../dist/apps/ui-plugin',
     emptyOutDir: true,
     reportCompressedSize: true,
