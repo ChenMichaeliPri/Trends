@@ -1,9 +1,9 @@
-export type ProductInsights = {
+export interface ProductInsights {
     productId: number;
     min: number;
     max: number;
     average: number;
-    variance: number;
+    standardDeviation: number;
     shopToPricesData: Record<string, PriceRecord[]>;
     insights: string;
 };

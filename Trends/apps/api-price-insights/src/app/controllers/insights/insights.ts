@@ -1,6 +1,6 @@
 import { getProductStatistics } from './insights-logic';
 import { SUCCESS } from '../../consts'
-import { getProductsShops, getPriceRecords, getProducts } from '../../data-managers/sql-data-providers';
+import { getProductsShops, getPriceRecords, getShops } from '../../data-managers/sql-data-providers';
 import { updateProductInsightsById } from '../../data-managers/sql-data-updaters';
 
 export const postInsightsHandler = async (request, reply) => {
@@ -8,9 +8,9 @@ export const postInsightsHandler = async (request, reply) => {
     const FROM_DATE = new Date(new Date().setFullYear(new Date().getFullYear() - 3));
     const fastify = request.server;
 
-    const productShops = await getProductsShops(fastify);
-    
-    for (const metadata of productShops){
+    const dbShopsData = await getShops();
+    const productShops = getProductsShops();
+    productShops.forEach(metadata => {
         const shopToPricesData = {};
         const {productId, shopIds} = metadata;
 
@@ -18,7 +18,7 @@ export const postInsightsHandler = async (request, reply) => {
             shopToPricesData[shopId] = await getPriceRecords(fastify, productId, shopId, FROM_DATE, TO_DATE);
         }
         
-        const productStatistics = JSON.stringify(getProductStatistics(productId, shopIds, shopToPricesData));
+        const productStatistics = JSON.stringify(getProductStatistics(productId, shopIds, dbShopsData, shopToPricesData));
 
         await updateProductInsightsById(fastify, productId, productStatistics);
     }

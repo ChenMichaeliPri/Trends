@@ -14,9 +14,11 @@ export const MONTH_MAPPING = {
 };
 
 export const IN_MONTH_PERIOD_MAPPING = {
-    BEGINNING: 'Beginning',
-    MIDDLE: 'Middle',
-    END: 'End'
+    BEGINNING: 'beginning',
+    MIDDLE: 'middle',
+    END: 'end',
+    BEGINNING_DAY: 11,
+    END_DAY: 21
 };
 
 export const AVERAGE_PRICE_STATUS = {
