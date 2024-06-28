@@ -87,7 +87,6 @@ export const getProductStatistics = (
             
             if (shopToCurrentPriceData[shopId] === undefined) {
                 shopToCurrentPriceData[shopId] = {timestamp: new Date(0)} as  unknown as PriceRecord;
-                console.log({shopToCurrentPriceData});
             }
 
             if (shopToCurrentPriceData[shopId].timestamp < priceData.timestamp) {
