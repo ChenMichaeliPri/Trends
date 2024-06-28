@@ -3,7 +3,9 @@ import { FastifyInstance } from 'fastify';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import AutoLoad from '@fastify/autoload';
+import { fastifyMysql } from '@fastify/mysql';
 import { calculateRoutes } from './routes/calculate'
+import { dbRoutes } from './routes/db';
 
 export interface AppOptions {}
 
@@ -15,6 +17,15 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
     dir: path.join(__dirname, 'plugins'),
     options: { ...opts },
   });
+
+  // DB access
+  fastify.register(fastifyMysql, {
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    database: 'trends',
+    promise: true
+  })
 
   // This loads all plugins defined in routes
   // define your routes in one of these
@@ -40,5 +51,9 @@ fastify.register(fastifySwaggerUi, {
 
 fastify.register(calculateRoutes, {
   prefix: '/api/calculate'
+});
+
+fastify.register(dbRoutes, {
+  prefix: '/api/db'
 });
 }
