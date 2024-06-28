@@ -4,6 +4,6 @@ export interface ProductInsights {
     max: number;
     average: number;
     standardDeviation: number;
-    shopToPricesData: Record<string, PriceRecord[]>;
+    shopToCurrentPriceData: Record<string, PriceRecord[]>;
     insights: string;
 };

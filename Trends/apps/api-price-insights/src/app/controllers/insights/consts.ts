@@ -22,6 +22,6 @@ export const IN_MONTH_PERIOD_MAPPING = {
 };
 
 export const AVERAGE_PRICE_STATUS = {
-    BELOW: 'below',
-    ABOVE: 'above'
+    LOWER: 'lower',
+    HIGHER: 'higher'
 };
