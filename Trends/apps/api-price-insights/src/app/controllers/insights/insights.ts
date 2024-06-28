@@ -8,9 +8,10 @@ export const postInsightsHandler = async (request, reply) => {
     const FROM_DATE = new Date(new Date().setFullYear(new Date().getFullYear() - 3));
     const fastify = request.server;
 
-    const dbShopsData = await getShops();
-    const productShops = getProductsShops();
-    productShops.forEach(metadata => {
+    const dbShopsData = await getShops(fastify);
+    const productShops = await getProductsShops(fastify);
+    
+    for (const metadata of productShops){
         const shopToPricesData = {};
         const {productId, shopIds} = metadata;
 
@@ -24,4 +25,4 @@ export const postInsightsHandler = async (request, reply) => {
     }
 
     reply.code(200).send(SUCCESS);
-}
+};

@@ -15,7 +15,7 @@ const getInMonthPeriod = (day: number): string => {
 };
 
 const getCurrentToAverageStatus = (average: number, currentPrice: number): string => (
-    average <= currentPrice ? AVERAGE_PRICE_STATUS.BELOW : AVERAGE_PRICE_STATUS.ABOVE
+    average <= currentPrice ? AVERAGE_PRICE_STATUS.HIGHER : AVERAGE_PRICE_STATUS.LOWER
 );
 
 const getCheapestPriceData = (shopToCurrentPriceData: Record<string, PriceRecord>): PriceRecord => {
@@ -31,9 +31,9 @@ const getCheapestPriceData = (shopToCurrentPriceData: Record<string, PriceRecord
 };
 
 const getShopName = (priceData: PriceRecord, dbShopsData: Shop[]): string => {
-    return dbShopsData.filter(shop => {
-        shop.id === priceData.shopId;
-    })[0].name;
+    return dbShopsData.filter(shop => (
+        shop.id === priceData.shopId
+    ))[0].name;
 };
 
 const getInsights = (
@@ -54,11 +54,11 @@ const getInsights = (
     const minPriceShopName = getShopName(minPriceData, dbShopsData);
 
     return `
-    According to our data, currently the best price is in ${cheapestPriceShopName} ~ ${cheapestPriceData.price}$.
-    This price is ${currentToAverageStatus} average.
-    The standard deviation of the price from the average is ${standardDeviation}$ so decide for yourself if waiting is worthwhile.
-    Usually the best time for purchase is ${recommendedInMonthPeriod} of ${recommendedPurchaseMonth} in ${minPriceShopName} ~ ${minPriceData.price}$.
-    Avoid purchase in ${avoidInMonthPeriod} of ${avoidPurchaseMonth}.
+    According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${cheapestPriceData.price}$.
+    This is ${currentToAverageStatus} than the average price of ${average}$.
+    With a standard deviation of ${standardDeviation}$, you can determine whether its worth waiting for a better deal.
+    Usually the best time for purchase is ${recommendedInMonthPeriod} of ${recommendedPurchaseMonth} in ${minPriceShopName} with prices around ${Math.floor(minPriceData.price)}$.
+    Its advisable to avoid purchasing at the ${avoidInMonthPeriod} of ${avoidPurchaseMonth}.
     `;
 };
 
@@ -84,9 +84,9 @@ export const getProductStatistics = (
             if (priceData.price > maxPriceData.price) {
                 maxPriceData = priceData;
             }
-
+            
             if (shopToCurrentPriceData[shopId] === undefined) {
-                shopToCurrentPriceData[shopId] = {timeStamp: new Date(0)} as  unknown as PriceRecord
+                shopToCurrentPriceData[shopId] = {timestamp: new Date(0)} as  unknown as PriceRecord;
             }
 
             if (shopToCurrentPriceData[shopId].timestamp < priceData.timestamp) {
@@ -105,7 +105,7 @@ export const getProductStatistics = (
         max: maxPriceData.price,
         average,
         standardDeviation,
-        shopToPricesData,
+        shopToCurrentPriceData,
         insights
     };
 }
