@@ -9,7 +9,7 @@ type InsightsProps={
 
 export const Insights = ({items}:InsightsProps) =>{
   return(
-    <List sx={{ width: 340, height:250 ,overflowY:'scroll'}}>
+    <List sx={{ width: 390, height:250 ,overflowY:'scroll'}}>
       {items.map(({id,shouldPurchase,date,text})=>(
         <ListItem key={id}>
           <ListItemIcon>

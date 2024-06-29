@@ -1,21 +1,21 @@
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from 'recharts';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend} from 'recharts';
 
 import {CustomDot, CustomDotProps} from "./CustomDot";
-import {ChartData} from "./chart.types";
+import {StoresData} from "./chart.types";
 import {Grid, Typography} from "@mui/material";
 import {CHART} from "./chart.constants";
 
 type ChartProps={
-  data:ChartData[],
+  storesData:StoresData,
   minPrice:number,
   maxPrice:number,
   averagePrice:number
-  variance:number
+  standardDeviation:number
 }
 
-export const Chart = ({data,minPrice,maxPrice,averagePrice,variance}:ChartProps) => {
+export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesData}:ChartProps) => {
   return (
-    <Grid container width={350} spacing={1}>
+    <Grid container width={400} spacing={1}>
       <Grid item xs={6}>
         <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}',minPrice.toString())}</Typography>
       </Grid>
@@ -26,16 +26,22 @@ export const Chart = ({data,minPrice,maxPrice,averagePrice,variance}:ChartProps)
         <Typography>{CHART.AVERAGE_PRICE_TEXT.replace('{averagePrice}',averagePrice.toString())}</Typography>
       </Grid>
       <Grid item xs={6}>
-        <Typography>{CHART.VARIANCE_TEXT.replace('{variance}',variance.toString())}</Typography>
+        <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}',standardDeviation.toString())}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <LineChart width={350} height={200} data={data}  >
-          <Line type="monotone" dataKey="price" dot={(props:CustomDotProps)=><CustomDot {...props}/>}/>
-          <CartesianGrid strokeDasharray="5 5" />
-          <XAxis dataKey="date" />
-          <YAxis width={45} />
-          <Tooltip />
-        </LineChart>
+
+          <LineChart width={350} height={200}  >
+            {Object.entries(storesData).map(([name,data])=>(
+              <Line data={data} name={name} dataKey="price" key={name} dot={(props:CustomDotProps) =><CustomDot {...props}/>}/>
+            ))}
+            <CartesianGrid strokeDasharray="5 5" />
+            <XAxis dataKey="date" allowDuplicatedCategory={false}/>
+            <YAxis width={45} />
+            <Tooltip />
+            <Legend/>
+          </LineChart>
+
+
       </Grid>
     </Grid>
   );

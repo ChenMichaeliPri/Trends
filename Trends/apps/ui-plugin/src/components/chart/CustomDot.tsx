@@ -1,9 +1,9 @@
-import {ChartData} from "./chart.types";
+import {DataPoint} from "./chart.types";
 
 export type CustomDotProps={
     cx:number,
     cy:number,
-    payload:ChartData
+    payload:DataPoint
 }
 
 export const CustomDot = ({cx,cy,payload}:CustomDotProps)=>{
