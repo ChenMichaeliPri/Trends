@@ -13,7 +13,7 @@ export const productDataAdapter = (data:FetchedProduct) :{productName:string,cha
     storesData:data.data,
   },
   insightsProps:{
-    items:data.insights
+    insight:data.insights
   }
 
 })

@@ -1,11 +1,11 @@
-import { Button, Card, CardActions, CardContent, CardHeader} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardHeader, IconButton} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import {Chart} from "../chart/Chart";
 import {useChart} from "../chart/useChart";
 import {useInsights} from "../insights/useInsights";
 import {Insights} from "../insights/Insights";
 import {MAIN_PAGE} from "./mainPage.constants";
-
 export type MainPageProps = {
   productName:string;
   showTrends:boolean;
@@ -20,11 +20,16 @@ export const MainPage= ({productName,showTrends,onClick}:MainPageProps) => {
       <CardHeader
         title={MAIN_PAGE.TITLE_TEXT}
         subheader={MAIN_PAGE.SUBHEADER_TEXT.replace('{productName}',productName)}
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
       />
-      <CardContent sx={{paddingTop:0}}>
+      <CardContent sx={{paddingTop:0 , width:400 , height:250 ,}}>
         {showTrends
           ? <Chart {...chartProps}/>
-          : <Insights items={insightsData}/>
+          : <Insights insight={insightsData}/>
         }
       </CardContent>
       <CardActions>

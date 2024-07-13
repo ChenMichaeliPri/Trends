@@ -15,7 +15,7 @@ type ChartProps={
 
 export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesData}:ChartProps) => {
   return (
-    <Grid container width={400} spacing={1}>
+    <Grid container spacing={1}>
       <Grid item xs={6}>
         <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}',minPrice.toString())}</Typography>
       </Grid>
@@ -29,7 +29,6 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
         <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}',standardDeviation.toString())}</Typography>
       </Grid>
       <Grid item xs={12}>
-
           <LineChart width={350} height={200}  >
             {Object.entries(storesData).map(([name,data])=>(
               <Line data={data} name={name} dataKey="price" key={name} dot={(props:CustomDotProps) =><CustomDot {...props}/>}/>
@@ -40,8 +39,6 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
             <Tooltip />
             <Legend/>
           </LineChart>
-
-
       </Grid>
     </Grid>
   );

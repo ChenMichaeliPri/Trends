@@ -1,23 +1,13 @@
-import {List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
-import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
-import ThumbDownAltSharpIcon from '@mui/icons-material/ThumbDownAltSharp';
-import {InsightsData} from "./insights.types";
+import { Typography } from "@mui/material";
 
 type InsightsProps={
-  items:InsightsData[];
+  insight:string
 }
 
-export const Insights = ({items}:InsightsProps) =>{
+export const Insights = ({insight}:InsightsProps) =>{
   return(
-    <List sx={{ width: 390, height:250 ,overflowY:'scroll'}}>
-      {items.map(({id,shouldPurchase,date,text})=>(
-        <ListItem key={id}>
-          <ListItemIcon>
-            {shouldPurchase? <ThumbUpAltSharpIcon/> : <ThumbDownAltSharpIcon/> }
-          </ListItemIcon>
-          <ListItemText primary={text} secondary={date}/>
-        </ListItem>
-      ))}
-    </List>
+    <Typography whiteSpace={'pre-line'} >
+      {insight}
+    </Typography>
   )
 }
