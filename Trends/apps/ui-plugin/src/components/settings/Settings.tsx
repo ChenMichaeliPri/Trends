@@ -12,9 +12,11 @@ type SettingsProps ={
   isSettingsOpen:boolean,
   handleClose: ()=>void,
   formState:UserSettings,
-  handleChange:(field:string,value:boolean)=>void
+  handleChange:(field:string,value:boolean)=>void,
+  handleSave:()=>void
 }
-export const Settings = ({isSettingsOpen , handleClose,formState,handleChange}:SettingsProps) =>{
+
+export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,handleSave}:SettingsProps) =>{
   return(
     <Dialog open={isSettingsOpen} onClose={handleClose} fullWidth>
       <DialogTitle>User Settings</DialogTitle>
@@ -101,7 +103,7 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange}:S
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Close</Button>
-        <Button>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
       </DialogActions>
     </Dialog>
     );

@@ -1,20 +1,26 @@
 import {useState} from "react";
 import {UserSettings} from "./settings.types";
-import {defaultSettings} from "./settings.constants";
+import {useLocalStorage} from "../../utils/localStorage/LocalStorageProvider";
 
 export const useSettings = () => {
+  const { data, setData } = useLocalStorage();
   const [isSettingsOpen , setIsSettingsOpen] = useState(false);
-  const [formState,setFormState] = useState<UserSettings>(defaultSettings)
+  const [formState,setFormState] = useState<UserSettings>(data)
+  const handleClose = () => setIsSettingsOpen(false)
   return{
     openSettings: () => setIsSettingsOpen(true),
     isSettingsOpen,
-    handleClose: () => setIsSettingsOpen(false),
+    handleClose,
     formState,
     handleChange: (field:string,value:boolean) =>{
       setFormState((prevState)=>({
         ...prevState,
         [field]:value
       }))
+    },
+    handleSave:()=> {
+      setData(formState);
+      handleClose();
     }
   }
 
