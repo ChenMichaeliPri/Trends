@@ -25,3 +25,7 @@ export const AVERAGE_PRICE_STATUS = {
     LOWER: 'lower',
     HIGHER: 'higher'
 };
+
+export const DISTRIBUTION_CHUNK_SIZE = 7;
+
+export const YEARS_TO_MEASURE_DISTRIBUTION = 2;
