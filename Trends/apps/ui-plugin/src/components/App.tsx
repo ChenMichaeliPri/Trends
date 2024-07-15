@@ -9,7 +9,7 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Box sx={{display:'flex' }}>
+      <Box sx={{display:'flex' ,height:'100%',width:'100%'}}>
         <MainPageController/>
       </Box>
     </QueryClientProvider>
