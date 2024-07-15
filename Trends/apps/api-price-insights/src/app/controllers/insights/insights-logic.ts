@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import { variance, mean } from "mathjs";
 import { ProductInsights } from './types';
-import { IN_MONTH_PERIOD_MAPPING, MONTH_MAPPING, AVERAGE_PRICE_STATUS } from "./consts";
+import { IN_MONTH_PERIOD_MAPPING, MONTH_MAPPING, AVERAGE_PRICE_STATUS, DISTRIBUTION_CHUNK_SIZE, YEARS_TO_MEASURE_DISTRIBUTION } from "./consts";
 
 const getInMonthPeriod = (day: number): string => {
     if (day < IN_MONTH_PERIOD_MAPPING.BEGINNING_DAY) {
@@ -36,14 +37,51 @@ const getShopName = (priceData: PriceRecord, dbShopsData: Shop[]): string => {
     ))[0].name;
 };
 
+const getDistributionData = (
+    shopIds: number[],
+    shopToPricesData: Record<number, PriceRecord[]>,
+    cheapestPriceData: PriceRecord,
+    timeframeChunkSize: number,
+    yearsToMeasure: number
+): {percentsHigherThanCurrentPrice: number; shopToAveragesOfChunkedPrices: Record<number, number[]>} => {
+
+    const {shopId: cheapestShopId, price: cheapestPrice} = cheapestPriceData;
+    const filteredShopToPricesData: Record<number, number[]> = {};
+    const shopToAveragesOfChunkedPrices: Record<number, number[]> = {};
+    const currentDate = new Date();
+    const fromDate = new Date();
+    fromDate.setFullYear(currentDate.getFullYear() - yearsToMeasure);
+
+    shopIds.forEach(shopId => {
+        filteredShopToPricesData[shopId] = shopToPricesData[shopId]
+            .filter((priceData: PriceRecord) => fromDate < priceData.timestamp)
+            .map((priceData: PriceRecord) => priceData.price)
+    });
+
+    shopIds.forEach(shopId => {
+        shopToAveragesOfChunkedPrices[shopId] =
+        _.chunk(filteredShopToPricesData[shopId], timeframeChunkSize)
+        .map((priceDataChunk: number[]) => 
+            Math.floor(mean(priceDataChunk))
+        )
+    });
+
+    const greaterThanCheapestPrice = shopToAveragesOfChunkedPrices[cheapestShopId].filter(price => cheapestPrice < price);
+    const percentsHigherThanCurrentPrice = Math.floor((greaterThanCheapestPrice.length / shopToAveragesOfChunkedPrices[cheapestShopId].length) * 100);
+
+    return {percentsHigherThanCurrentPrice, shopToAveragesOfChunkedPrices};
+};
+
 const getInsights = (
     minPriceData: PriceRecord,
     maxPriceData: PriceRecord,
     average: number,
     standardDeviation: number,
     shopToCurrentPriceData: Record<string, PriceRecord>,
-    dbShopsData: Shop[]
-): string => {
+    dbShopsData: Shop[],
+    shopToPricesData: Record<number, PriceRecord[]>,
+    shopIds: number[]
+): {promptText: string, histogramData: Record<number, number[]>} => {
     const recommendedPurchaseMonth = MONTH_MAPPING[minPriceData.timestamp.getMonth()];
     const recommendedInMonthPeriod = getInMonthPeriod(minPriceData.timestamp.getDay());
     const avoidPurchaseMonth = MONTH_MAPPING[maxPriceData.timestamp.getMonth()];
@@ -52,14 +90,24 @@ const getInsights = (
     const currentToAverageStatus = getCurrentToAverageStatus(average, cheapestPriceData.price);
     const cheapestPriceShopName = getShopName(cheapestPriceData, dbShopsData);
     const minPriceShopName = getShopName(minPriceData, dbShopsData);
+    const {percentsHigherThanCurrentPrice, shopToAveragesOfChunkedPrices} = getDistributionData(
+        shopIds,
+        shopToPricesData,
+        cheapestPriceData,
+        DISTRIBUTION_CHUNK_SIZE,
+        YEARS_TO_MEASURE_DISTRIBUTION
+    );
 
-    return `
+    const promptText = `
     According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${cheapestPriceData.price}$.
     This is ${currentToAverageStatus} than the average price of ${average}$.
-    With a standard deviation of ${standardDeviation}$, you can determine whether its worth waiting for a better deal.
+    This week the price is lower than ${percentsHigherThanCurrentPrice}% of the weeks for the past ${YEARS_TO_MEASURE_DISTRIBUTION} years.
+    With a standard deviation of ${standardDeviation}$ from average, determine whether its worth waiting for a better deal.
     Usually the best time for purchase is ${recommendedInMonthPeriod} of ${recommendedPurchaseMonth} in ${minPriceShopName} with prices around ${Math.floor(minPriceData.price)}$.
     Its advisable to avoid purchasing at the ${avoidInMonthPeriod} of ${avoidPurchaseMonth}.
     `;
+
+    return {promptText, histogramData: shopToAveragesOfChunkedPrices};
 };
 
 export const getProductStatistics = (
@@ -72,6 +120,12 @@ export const getProductStatistics = (
     let shopToCurrentPriceData = {};
     let maxPriceData = {price: -1} as  unknown as PriceRecord;
     let minPriceData = {price: Number.POSITIVE_INFINITY} as  unknown as PriceRecord;
+
+    shopIds.forEach(shopId => {
+        shopToPricesData[shopId].sort(((priceData1, priceData2) => (
+            priceData1.timestamp <= priceData2.timestamp ? -1 : 1
+        )))
+    });
 
     shopIds.forEach(shopId => {
         shopToPricesData[shopId].forEach(priceData => {
@@ -97,7 +151,16 @@ export const getProductStatistics = (
 
     const average = Math.floor(mean(allShopsPrices));
     const standardDeviation = Math.floor(Math.sqrt(variance(allShopsPrices) as unknown as number));
-    const insights = getInsights(minPriceData, maxPriceData, average, standardDeviation, shopToCurrentPriceData, dbShopsData);
+    const {promptText, histogramData} = getInsights(
+        minPriceData,
+        maxPriceData,
+        average,
+        standardDeviation,
+        shopToCurrentPriceData,
+        dbShopsData,
+        shopToPricesData,
+        shopIds
+    );
 
     return {
         productId,
@@ -106,6 +169,7 @@ export const getProductStatistics = (
         average,
         standardDeviation,
         shopToCurrentPriceData,
-        insights
+        insights: promptText,
+        histogramData
     };
 }

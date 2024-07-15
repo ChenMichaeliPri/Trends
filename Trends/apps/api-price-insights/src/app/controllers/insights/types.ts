@@ -6,4 +6,5 @@ export interface ProductInsights {
     standardDeviation: number;
     shopToCurrentPriceData: Record<string, PriceRecord[]>;
     insights: string;
+    histogramData: Record<number, number[]>;
 };
