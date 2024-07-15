@@ -1,9 +1,10 @@
-export type ProductInsights = {
+export interface ProductInsights {
     productId: number;
     min: number;
     max: number;
     average: number;
-    variance: number;
-    shopToPricesData: Record<string, PriceRecord[]>;
+    standardDeviation: number;
+    shopToCurrentPriceData: Record<string, PriceRecord[]>;
     insights: string;
+    histogramData: Record<number, number[]>;
 };

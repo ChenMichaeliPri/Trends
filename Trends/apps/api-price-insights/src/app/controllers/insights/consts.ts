@@ -14,12 +14,18 @@ export const MONTH_MAPPING = {
 };
 
 export const IN_MONTH_PERIOD_MAPPING = {
-    BEGINNING: 'Beginning',
-    MIDDLE: 'Middle',
-    END: 'End'
+    BEGINNING: 'beginning',
+    MIDDLE: 'middle',
+    END: 'end',
+    BEGINNING_DAY: 11,
+    END_DAY: 21
 };
 
 export const AVERAGE_PRICE_STATUS = {
-    BELOW: 'below',
-    ABOVE: 'above'
+    LOWER: 'lower',
+    HIGHER: 'higher'
 };
+
+export const DISTRIBUTION_CHUNK_SIZE = 7;
+
+export const YEARS_TO_MEASURE_DISTRIBUTION = 2;
