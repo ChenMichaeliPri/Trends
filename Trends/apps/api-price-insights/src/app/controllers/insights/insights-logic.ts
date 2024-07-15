@@ -168,7 +168,7 @@ export const getProductStatistics = (
         max: maxPriceData.price,
         average,
         standardDeviation,
-        shopToPricesData,
+        shopToCurrentPriceData,
         insights: promptText,
         histogramData
     };
