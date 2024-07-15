@@ -4,7 +4,7 @@ export interface ProductInsights {
     max: number;
     average: number;
     standardDeviation: number;
-    shopToCurrentPriceData: Record<string, PriceRecord[]>;
+    shopToPricesData: Record<string, PriceRecord[]>;
     insights: string;
     histogramData: Record<number, number[]>;
 };
