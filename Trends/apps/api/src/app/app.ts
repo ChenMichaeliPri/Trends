@@ -1,5 +1,5 @@
 import * as path from 'path';
-import fastifyCors from 'fastify-cors';
+import fastifyCors from '@fastify/cors';
 import { FastifyInstance } from 'fastify';
 import AutoLoad from '@fastify/autoload';
 import { fastifyMysql } from '@fastify/mysql';
