@@ -1,4 +1,5 @@
 import * as path from 'path';
+import fastifyCors from 'fastify-cors';
 import { FastifyInstance } from 'fastify';
 import AutoLoad from '@fastify/autoload';
 import { fastifyMysql } from '@fastify/mysql';
@@ -34,6 +35,10 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'routes'),
     options: { ...opts },
+  });
+
+  fastify.register(fastifyCors, { 
+    origin: '*' 
   });
 
   fastify.register(insightsRoutes, {
