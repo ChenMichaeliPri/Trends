@@ -1,7 +1,4 @@
-import {ComponentProps} from "react";
-
-import {DataPoint, StoresData} from "./chart.types";
-import {Chart} from "./Chart";
+import {ChartData, DataPoint, StoresData} from "./chart.types";
 
 export const minPriceMock = 1000;
 export const maxPriceMock = 3000;
@@ -107,10 +104,9 @@ export const storesDataMock : StoresData = {
   3:ivoryDataMock
 }
 
-export const charDataMock :Omit<ComponentProps<typeof Chart>,'userSettings'> ={
+export const chartDataMock :ChartData ={
   minPrice:minPriceMock,
   maxPrice:maxPriceMock,
   averagePrice:averagePriceMock,
-  standardDeviation:standardDeviationMock,
-  storesData:storesDataMock
+  standardDeviation:standardDeviationMock
 }

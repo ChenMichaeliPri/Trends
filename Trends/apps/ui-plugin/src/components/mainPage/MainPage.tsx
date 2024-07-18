@@ -7,19 +7,21 @@ import {Insights} from "../insights/Insights";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
+import {ChartData, StoresData} from "../chart/chart.types";
 
 export type MainPageProps = {
   productName:string;
   showTrends:boolean;
   insights:string;
-  chartProps:Omit<ComponentProps<typeof Chart>,'userSettings'>;
+  chartData:ChartData;
+  storesData:StoresData
   onClick:()=>void;
   openSettings:()=>void;
   userSettings:UserSettings;
   settingsProps:ComponentProps<typeof Settings>
 }
 
-export const MainPage= ({productName,showTrends,onClick,insights,chartProps,openSettings,userSettings,settingsProps}:MainPageProps) => {
+export const MainPage= ({productName,showTrends,onClick,insights,chartData,storesData,openSettings,userSettings,settingsProps}:MainPageProps) => {
   return (
     <>
       <Card>
@@ -34,7 +36,7 @@ export const MainPage= ({productName,showTrends,onClick,insights,chartProps,open
         />
         <CardContent sx={{paddingTop:0 , width:400 , height:250 ,}}>
           {showTrends
-            ? <Chart {...chartProps} userSettings={userSettings}/>
+            ? <Chart chartData={chartData} storesData={storesData} userSettings={userSettings}/>
             : <Insights insight={insights}/>
           }
         </CardContent>

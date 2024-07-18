@@ -1,3 +1,4 @@
 export const ROUTES= {
-  INSIGHTS: '/api/insights'
+  INSIGHTS: '/api/insights',
+  PRICES:'/api/prices'
 };

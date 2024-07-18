@@ -1,12 +1,10 @@
-import { StoresData} from "../../components/chart/chart.types";
-
-export type FetchedProduct = {
+export type FetchedInsights = {
   productId: number,
   min: number,
   max: number,
   average: number,
   standardDeviation:number,
-  shopToPricesData:StoresData,
+  shopToCurrentPriceData:Record<number,{price:number}>,
   insights:string,
   histogramData:Record<number, number[]>
 }

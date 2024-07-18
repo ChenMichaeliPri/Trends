@@ -1,20 +1,17 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend} from 'recharts';
 
-import {StoresData} from "./chart.types";
+import {ChartData, StoresData} from "./chart.types";
 import {Grid, Typography} from "@mui/material";
 import {CHART, shopIdToNameMap} from "./chart.constants";
 import {UserSettings} from "../settings/settings.types";
 
 type ChartProps={
+  chartData:ChartData,
   storesData:StoresData,
-  minPrice:number,
-  maxPrice:number,
-  averagePrice:number
-  standardDeviation:number
   userSettings :UserSettings
 }
 
-export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesData, userSettings}:ChartProps) => {
+export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
   const {
     showMinPrice,
     showMaxPrice,
@@ -24,6 +21,12 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
     showIvoryData,
     showKSPData
   } = userSettings;
+  const {
+    minPrice,
+    maxPrice,
+    averagePrice,
+    standardDeviation
+  } = chartData;
   const filerStores = (storeId:string)=>{
     switch (storeId) {
       case '1': return showAmazonData;
@@ -36,16 +39,16 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
   return (
     <Grid container spacing={1}>
       {showMinPrice && <Grid item xs={6}>
-        <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice.toString())}</Typography>
+        <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
       </Grid>}
       {showMaxPrice && <Grid item xs={6}>
-        <Typography>{CHART.MAX_PRICE_TEXT.replace('{maxPrice}', maxPrice.toString())}</Typography>
+        <Typography>{CHART.MAX_PRICE_TEXT.replace('{maxPrice}', maxPrice?.toString())}</Typography>
       </Grid>}
       {showAveragePrice && <Grid item xs={6}>
-        <Typography>{CHART.AVERAGE_PRICE_TEXT.replace('{averagePrice}', averagePrice.toString())}</Typography>
+        <Typography>{CHART.AVERAGE_PRICE_TEXT.replace('{averagePrice}', averagePrice?.toString())}</Typography>
       </Grid>}
       {showStandardDeviation && <Grid item xs={6}>
-        <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation.toString())}</Typography>
+        <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
       </Grid>}
       {(showAmazonData || showIvoryData || showKSPData ) && <Grid item xs={12}>
         <LineChart width={350} height={200}>

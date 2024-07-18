@@ -1,16 +1,17 @@
-import {FetchedProduct} from "../../api/product/product.types";
-import {ComponentProps} from "react";
-import {Chart} from "../chart/Chart";
-import {storesDataMock} from "../chart/chart.mock";
+import {FetchedInsights} from "../../api/insights/insights.types";
+import {ChartData} from "../chart/chart.types";
 
-export const productDataAdapter = (data:FetchedProduct) :{chartProps:ComponentProps<typeof Chart>,insights:string,histogramData:Record<number, number[]>} =>({
-  chartProps:{
-    minPrice:data.min,
-    maxPrice:data.max,
-    averagePrice:data.average,
-    standardDeviation:data.standardDeviation,
-    storesData:storesDataMock,
-  },
-  insights:data.insights,
-  histogramData:data.histogramData
-})
+export const productDataAdapter = (data:string) :{chartData:ChartData,insights:string,histogramData:Record<number, number[]>} =>{
+  const parsedData:FetchedInsights = JSON.parse(data)
+  console.log(parsedData)
+  return ({
+    chartData: {
+      minPrice: parsedData.min,
+      maxPrice: parsedData.max,
+      averagePrice: parsedData.average,
+      standardDeviation: parsedData.standardDeviation
+    },
+    insights: parsedData.insights,
+    histogramData: parsedData.histogramData
+  })
+}

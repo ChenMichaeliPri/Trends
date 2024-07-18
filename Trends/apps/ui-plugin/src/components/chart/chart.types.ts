@@ -9,6 +9,13 @@ export type StoresData = {
   3:DataPoint[];
 }
 
+export type ChartData = {
+  minPrice:number,
+  maxPrice:number,
+  averagePrice:number
+  standardDeviation:number
+}
+
 export type UIStore = {
   storeName:string,
   lineColor:string
