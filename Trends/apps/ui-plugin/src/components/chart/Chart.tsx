@@ -1,6 +1,5 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend} from 'recharts';
 
-import {CustomDot, CustomDotProps} from "./CustomDot";
 import {StoresData} from "./chart.types";
 import {Grid, Typography} from "@mui/material";
 import {CHART} from "./chart.constants";
@@ -31,7 +30,7 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
       <Grid item xs={12}>
           <LineChart width={350} height={200}  >
             {Object.entries(storesData).map(([name,data])=>(
-              <Line data={data} name={name} dataKey="price" key={name} dot={(props:CustomDotProps) =><CustomDot {...props}/>}/>
+              <Line data={data} name={name} dataKey="price" key={name} dot={<></>}/>
             ))}
             <CartesianGrid strokeDasharray="5 5" />
             <XAxis dataKey="date" allowDuplicatedCategory={false}/>

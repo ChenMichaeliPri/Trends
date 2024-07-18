@@ -5,8 +5,8 @@ import {MainPageProps} from "./MainPage";
 import {getProduct} from "../../api/product/product";
 import {productDataAdapter} from "./mainPage.services";
 import {insightsMock} from "../insights/insights.mock";
-import {useChart} from "../chart/useChart";
 import {useSettings} from "../settings/useSettings";
+import {charDataMock} from "../chart/chart.mock";
 
 export const useMainPage = ():MainPageProps =>{
   const [showTrends , setShowTrends] = useState(true)
@@ -34,7 +34,7 @@ export const useMainPage = ():MainPageProps =>{
     showTrends,
     onClick:() => setShowTrends((prevState)=>!prevState),
     insights:data?.insights || insightsMock,
-    chartProps:data?.chartProps || useChart(),
+    chartProps:data?.chartProps || charDataMock,
     openSettings,
     settingsProps
   }
