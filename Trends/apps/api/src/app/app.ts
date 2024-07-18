@@ -4,6 +4,7 @@ import { FastifyInstance } from 'fastify';
 import AutoLoad from '@fastify/autoload';
 import { fastifyMysql } from '@fastify/mysql';
 import { insightsRoutes } from './routes/insights';
+import { pricesRoutes } from './routes/prices';
 
 /* eslint-disable-next-line */
 export interface AppOptions {}
@@ -43,5 +44,9 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
 
   fastify.register(insightsRoutes, {
     prefix: '/api/insights'
+  });
+
+  fastify.register(pricesRoutes, {
+    prefix: '/api/prices'
   });
 }
