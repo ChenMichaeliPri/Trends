@@ -1,24 +1,23 @@
 import {Button, Card, CardActions, CardContent, CardHeader, IconButton} from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {ComponentProps} from "react";
 
 import {Chart} from "../chart/Chart";
-import {useChart} from "../chart/useChart";
-import {useInsights} from "../insights/useInsights";
 import {Insights} from "../insights/Insights";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
-import {useSettings} from "../settings/useSettings";
 
 export type MainPageProps = {
   productName:string;
   showTrends:boolean;
+  insights:string;
+  chartProps:ComponentProps<typeof Chart>;
   onClick:()=>void;
+  openSettings:()=>void;
+  settingsProps:ComponentProps<typeof Settings>
 }
 
-export const MainPage= ({productName,showTrends,onClick}:MainPageProps) => {
-  const chartProps = useChart();
-  const insightsData = useInsights();
-  const {openSettings , ...settingProps} = useSettings();
+export const MainPage= ({productName,showTrends,onClick,insights,chartProps,openSettings,settingsProps}:MainPageProps) => {
   return (
     <>
       <Card>
@@ -34,14 +33,14 @@ export const MainPage= ({productName,showTrends,onClick}:MainPageProps) => {
         <CardContent sx={{paddingTop:0 , width:400 , height:250 ,}}>
           {showTrends
             ? <Chart {...chartProps}/>
-            : <Insights insight={insightsData}/>
+            : <Insights insight={insights}/>
           }
         </CardContent>
         <CardActions>
           <Button size='small' onClick={onClick}> {showTrends? MAIN_PAGE.INSIGHTS_BUTTON_TEXT: MAIN_PAGE.TRENDS_BUTTON_TEXT}</Button>
         </CardActions>
       </Card>
-      <Settings {...settingProps}/>
+      <Settings {...settingsProps} />
     </>
   );
 }

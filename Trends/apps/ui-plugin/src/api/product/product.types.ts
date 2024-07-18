@@ -6,6 +6,7 @@ export type FetchedProduct = {
   max: number,
   average: number,
   standardDeviation:number,
-  data:StoresData,
-  insights:string
+  shopToPricesData:StoresData,
+  insights:string,
+  histogramData:Record<number, number[]>
 }
