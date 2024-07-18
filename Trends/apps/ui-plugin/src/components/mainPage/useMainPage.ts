@@ -10,7 +10,7 @@ import {charDataMock} from "../chart/chart.mock";
 
 export const useMainPage = ():MainPageProps =>{
   const [showTrends , setShowTrends] = useState(true)
-  const {openSettings,...settingsProps} = useSettings()
+  const {openSettings,formState,...settingsProps} = useSettings()
   const [url,setUrl] = useState('')
 
   const { data, isLoading } = useQuery({
@@ -36,6 +36,7 @@ export const useMainPage = ():MainPageProps =>{
     insights:data?.insights || insightsMock,
     chartProps:data?.chartProps || charDataMock,
     openSettings,
-    settingsProps
+    userSettings:formState,
+    settingsProps:{...settingsProps,formState}
   }
 }
