@@ -22,6 +22,7 @@ export function generateGetPricesByIdHandler(fastify: FastifyInstance){
         const shops = (await getShops(fastify));
         const productShopPrices : ProductShopPrices[] = [];
 
+        // For each shop, gather prices and return as modeled object
         for (const shop of shops) {
             const productPrices = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getPricesQuery(productId, shop.id)))[0];
             const modeledProductPrices = productPrices.map(p => {
