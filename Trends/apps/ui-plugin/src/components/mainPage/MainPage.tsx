@@ -12,7 +12,7 @@ export type MainPageProps = {
   productName:string;
   showTrends:boolean;
   insights:string;
-  chartProps:ComponentProps<typeof Chart>;
+  chartProps:Omit<ComponentProps<typeof Chart>,'userSettings'>;
   onClick:()=>void;
   openSettings:()=>void;
   userSettings:UserSettings;

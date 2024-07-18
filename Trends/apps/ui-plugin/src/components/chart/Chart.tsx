@@ -2,7 +2,7 @@ import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend} from 'rec
 
 import {StoresData} from "./chart.types";
 import {Grid, Typography} from "@mui/material";
-import {CHART} from "./chart.constants";
+import {CHART, shopIdToNameMap} from "./chart.constants";
 import {UserSettings} from "../settings/settings.types";
 
 type ChartProps={
@@ -23,7 +23,16 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
     showAmazonData,
     showIvoryData,
     showKSPData
-  } = userSettings
+  } = userSettings;
+  const filerStores = (storeId:string)=>{
+    switch (storeId) {
+      case '1': return showAmazonData;
+      case '2': return showKSPData;
+      case '3': return showIvoryData;
+      default: return false;
+    }
+  }
+
   return (
     <Grid container spacing={1}>
       {showMinPrice && <Grid item xs={6}>
@@ -38,10 +47,10 @@ export const Chart = ({minPrice,maxPrice,averagePrice,standardDeviation,storesDa
       {showStandardDeviation && <Grid item xs={6}>
         <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation.toString())}</Typography>
       </Grid>}
-      {(showAmazonData || showIvoryData || showIvoryData ) && <Grid item xs={12}>
+      {(showAmazonData || showIvoryData || showKSPData ) && <Grid item xs={12}>
         <LineChart width={350} height={200}>
-          {Object.entries(storesData).map(([name, data]) => (
-            <Line data={data} name={name} dataKey="price" key={name} dot={<></>}/>
+          {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
+            <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={<></>}/>
           ))}
           <CartesianGrid strokeDasharray="5 5"/>
           <XAxis dataKey="date" allowDuplicatedCategory={false}/>

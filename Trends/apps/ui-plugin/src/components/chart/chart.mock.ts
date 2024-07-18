@@ -102,12 +102,12 @@ export const kspDataMock:DataPoint[] = [
 ];
 
 export const storesDataMock : StoresData = {
-  amazon:amazonDataMock,
-  ksp:kspDataMock,
-  ivory:ivoryDataMock
+  1:amazonDataMock,
+  2:kspDataMock,
+  3:ivoryDataMock
 }
 
-export const charDataMock :ComponentProps<typeof Chart> ={
+export const charDataMock :Omit<ComponentProps<typeof Chart>,'userSettings'> ={
   minPrice:minPriceMock,
   maxPrice:maxPriceMock,
   averagePrice:averagePriceMock,
