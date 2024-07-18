@@ -11,11 +11,11 @@ import {charDataMock} from "../chart/chart.mock";
 export const useMainPage = ():MainPageProps =>{
   const [showTrends , setShowTrends] = useState(true)
   const {openSettings,formState,...settingsProps} = useSettings()
-  const [url,setUrl] = useState('')
-
+  const [productId,setProductId] = useState('1')
+  const [productName,setProductName] = useState('Samsung Galaxy S21 5G (128GB 8GB)')
   const { data, isLoading } = useQuery({
-    queryKey:[url],
-    queryFn:() => getProduct('1'),
+    queryKey:[productId],
+    queryFn:() => getProduct(productId),
     select:(data)=>productDataAdapter(data)
     }
   )
@@ -24,13 +24,16 @@ export const useMainPage = ():MainPageProps =>{
     chrome?.runtime?.sendMessage({ message: "get_url" }, (response) => {
       if (response && response.url) {
         console.log(`Current URL: ${response.url}`);
-        setUrl(response.url);
+        const parsedUrl = new URL(response.url);
+        const searchParams = new URLSearchParams(parsedUrl.search)
+        setProductId(searchParams.get('productId') || '1')
+        setProductName(searchParams.get('productName')|| 'Samsung Galaxy S21 5G (128GB 8GB)')
       }
     });
   }, []);
 
   return {
-    productName:'iPhone 15 Pro Max',
+    productName,
     showTrends,
     onClick:() => setShowTrends((prevState)=>!prevState),
     insights:data?.insights || insightsMock,
