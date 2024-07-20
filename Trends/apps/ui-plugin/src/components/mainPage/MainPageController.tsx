@@ -1,9 +1,12 @@
 import {useMainPage} from "./useMainPage";
 import {MainPage} from "./MainPage";
+import {CircularProgress} from "@mui/material";
 
 export const MainPageController = () => {
-  const mainPageProps = useMainPage()
+  const {isLoading,...mainPageProps} = useMainPage()
   return (
-    <MainPage {...mainPageProps}/>
+    isLoading
+    ? <CircularProgress/>
+    : <MainPage {...mainPageProps}/>
   )
 }
