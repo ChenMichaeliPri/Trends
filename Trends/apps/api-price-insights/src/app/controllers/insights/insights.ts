@@ -18,7 +18,7 @@ export const postInsightsHandler = async (request, reply) => {
         for (const shopId of shopIds){
             shopToPricesData[shopId] = await getPriceRecords(fastify, productId, shopId, FROM_DATE, TO_DATE);
         }
-        
+     
         const productStatistics = JSON.stringify(getProductStatistics(productId, shopIds, dbShopsData, shopToPricesData));
 
         await updateProductInsightsById(fastify, productId, productStatistics);

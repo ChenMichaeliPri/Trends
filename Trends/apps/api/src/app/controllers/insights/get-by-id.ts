@@ -19,13 +19,12 @@ export function generateGetInsightsByIdHandler(fastify: FastifyInstance){
         }
 
         const insights = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getInsightsQuery(productId)))[0];
-        console.log(insights);
 
         if (!insights.length) {
             reply.code(404).send(`productId: ${productId} not found`);
         }
 
-        return JSON.stringify(insights);
+        return insights[0].insights;
     }
     catch(error) {
       console.log(error);

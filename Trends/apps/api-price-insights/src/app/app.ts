@@ -36,24 +36,24 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
 
   fastify.register(fastifySwagger, {
     swagger: {
-        info: {
-            title: 'Price Insights Job',
-            version: '1.0.0'
-        },
+      info: {
+          title: 'Price Pulse Insights Job',
+          version: '1.0.0'
+      },
     }
-});
+  });
 
-// @ts-ignore
-fastify.register(fastifySwaggerUi, {
+  // @ts-ignore
+  fastify.register(fastifySwaggerUi, {
     routePrefix: '/swagger',
     exposeRoute: true
-});
+  });
 
-fastify.register(calculateRoutes, {
-  prefix: '/api/calculate'
-});
+  fastify.register(calculateRoutes, {
+    prefix: '/api/calculate'
+  });
 
-fastify.register(dbRoutes, {
-  prefix: '/api/db'
-});
+  fastify.register(dbRoutes, {
+    prefix: '/api/db'
+  });
 }
