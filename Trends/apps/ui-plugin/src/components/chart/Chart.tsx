@@ -51,7 +51,7 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
         <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
       </Grid>}
       {(showAmazonData || showIvoryData || showKSPData ) && <Grid item  xs={12}>
-      <ResponsiveContainer width={'100%'} height={200} >
+      <ResponsiveContainer width={'100%'} height={250} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>

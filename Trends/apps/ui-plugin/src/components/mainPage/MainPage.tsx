@@ -34,7 +34,7 @@ export const MainPage= ({productName,showTrends,onClick,insights,chartData,store
             </IconButton>
           }
         />
-        <CardContent sx={{paddingTop:0 , width:600 , height:300 ,}}>
+        <CardContent sx={{paddingTop:0 , width:700 , height:300 ,}}>
           {showTrends
             ? <Chart chartData={chartData} storesData={storesData} userSettings={userSettings}/>
             : <Insights insight={insights}/>
