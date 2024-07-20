@@ -48,9 +48,9 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
   } = chartData;
 
   const CURRENT_COMPONENT_MAP :Record<CurrentComponent,ReactElement>  ={
-    graph:<Chart chartData={chartData} storesData={storesData} userSettings={userSettings}/>,
+    graph:<Chart storesData={storesData} userSettings={userSettings}/>,
     insights: (
-      <Typography whiteSpace={'pre-line'} >
+      <Typography whiteSpace={'pre-line'} fontSize={20}>
         {insights}
       </Typography>
     ),
@@ -70,7 +70,7 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
             </IconButton>
           }
         />
-        <CardContent sx={{paddingTop:0 , width:700 , height:300 ,}}>
+        <CardContent sx={{paddingTop:0 , width:750 , height:400 }}>
           <Grid container spacing={1}>
             {showMinPrice && <Grid item xs={6}>
               <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
@@ -84,8 +84,8 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
             {showStandardDeviation && <Grid item xs={6}>
               <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
             </Grid>}
-            <Grid item xs={12}>
-              <Divider/>
+            <Grid item xs={12} sx={{marginTop:1,marginBottom:1}}>
+              <Divider sx={{borderWidth:1}}/>
             </Grid>
             <Grid item xs={12}>
               {CURRENT_COMPONENT_MAP[currentComponent]}
