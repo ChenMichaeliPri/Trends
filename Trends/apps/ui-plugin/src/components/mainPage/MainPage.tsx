@@ -54,7 +54,7 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
   } = chartData;
 
   const CURRENT_COMPONENT_MAP :Record<CurrentComponent,ReactElement>  ={
-    graph:<Chart chartData={chartData} storesData={storesData} userSettings={userSettings}/>,
+    graph:<Chart storesData={storesData} userSettings={userSettings}/>,
     insights: (
       <Typography whiteSpace={'pre-line'} >
         {insights}
