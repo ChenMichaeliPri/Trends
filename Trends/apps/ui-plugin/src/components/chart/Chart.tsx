@@ -1,32 +1,21 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
-import {ChartData, StoresData} from "./chart.types";
-import {Grid, Typography} from "@mui/material";
-import {CHART, shopIdToNameMap} from "./chart.constants";
+import {StoresData} from "./chart.types";
+import { shopIdToNameMap } from "./chart.constants";
 import {UserSettings} from "../settings/settings.types";
 
 type ChartProps={
-  chartData:ChartData,
   storesData:StoresData,
   userSettings :UserSettings
 }
 
-export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
+export const Chart = ({storesData, userSettings}:ChartProps) => {
   const {
-    showMinPrice,
-    showMaxPrice,
-    showAveragePrice,
-    showStandardDeviation,
     showAmazonData,
     showIvoryData,
     showKSPData
   } = userSettings;
-  const {
-    minPrice,
-    maxPrice,
-    averagePrice,
-    standardDeviation
-  } = chartData;
+
   const filerStores = (storeId:string)=>{
     switch (storeId) {
       case '1': return showAmazonData;
@@ -35,23 +24,9 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
       default: return false;
     }
   }
-
   return (
-    <Grid container spacing={1}>
-      {showMinPrice && <Grid item xs={6}>
-        <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
-      </Grid>}
-      {showMaxPrice && <Grid item xs={6}>
-        <Typography>{CHART.MAX_PRICE_TEXT.replace('{maxPrice}', maxPrice?.toString())}</Typography>
-      </Grid>}
-      {showAveragePrice && <Grid item xs={6}>
-        <Typography>{CHART.AVERAGE_PRICE_TEXT.replace('{averagePrice}', averagePrice?.toString())}</Typography>
-      </Grid>}
-      {showStandardDeviation && <Grid item xs={6}>
-        <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
-      </Grid>}
-      {(showAmazonData || showIvoryData || showKSPData ) && <Grid item  xs={12}>
-      <ResponsiveContainer width={'100%'} height={200} >
+    <>
+      {(showAmazonData || showIvoryData || showKSPData ) && (<ResponsiveContainer width={'100%'} height={250} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>
@@ -62,9 +37,8 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
           <Tooltip/>
           <Legend/>
         </LineChart>
-      </ResponsiveContainer>
-      </Grid>}
-    </Grid>
+      </ResponsiveContainer>)}
+    </>
   );
 }
 
