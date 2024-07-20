@@ -130,8 +130,6 @@ const getCheapestHighestPriceMonthData = (shopIds: number[], shopToPricesData: R
 };
 
 const getInsights = (
-    minPriceData: PriceRecord,
-    maxPriceData: PriceRecord,
     average: number,
     standardDeviation: number,
     shopToCurrentPriceData: Record<string, PriceRecord>,
@@ -176,13 +174,13 @@ export const getProductStatistics = (
 
     shopIds.forEach(shopId => {
         shopToPricesData[shopId].forEach(priceData => {
-            allShopsPrices.push(priceData.price);
+            allShopsPrices.push(Number(priceData.price));
 
-            if (priceData.price < minPriceData.price) {
+            if (Number(priceData.price) < minPriceData.price) {
                 minPriceData = priceData;
             }
 
-            if (priceData.price > maxPriceData.price) {
+            if (Number(priceData.price) > maxPriceData.price) {
                 maxPriceData = priceData;
             }
             
@@ -199,8 +197,6 @@ export const getProductStatistics = (
     const average = Math.floor(mean(allShopsPrices));
     const standardDeviation = Math.floor(Math.sqrt(variance(allShopsPrices) as unknown as number));
     const {promptText, histogramData} = getInsights(
-        minPriceData,
-        maxPriceData,
         average,
         standardDeviation,
         shopToCurrentPriceData,
@@ -208,7 +204,7 @@ export const getProductStatistics = (
         shopToPricesData,
         shopIds
     );
-
+    
     return {
         productId,
         min: minPriceData.price,
