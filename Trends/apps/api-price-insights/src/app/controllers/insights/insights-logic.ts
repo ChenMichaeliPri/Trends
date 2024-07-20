@@ -150,7 +150,7 @@ const getInsights = (
         YEARS_TO_MEASURE_DISTRIBUTION
     );
 
-    const promptText = `According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${cheapestPriceData.price}$.^This is ${currentToAverageStatus} than the average price of ${average}$.^This week the price is lower than ${percentsHigherThanCurrentPrice}% of the weeks for the past ${YEARS_TO_MEASURE_DISTRIBUTION} years.^With a standard deviation of ${standardDeviation}$ from average, determine whether its worth waiting for a better deal.^Usually the best time for purchase is ${recommendedInMonthPeriod} of ${MONTH_MAPPING[minMonthIndex]} with average price of ${minMonthPrice}$.^Its advisable to avoid purchasing at ${MONTH_MAPPING[maxMonthIndex]} with average price of ${maxMonthPrice}$.`;
+    const promptText = `According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${cheapestPriceData.price}$.This is ${currentToAverageStatus} than the average price of ${average}$.This week the price is lower than ${percentsHigherThanCurrentPrice}% of the weeks for the past ${YEARS_TO_MEASURE_DISTRIBUTION} years.With a standard deviation of ${standardDeviation}$ from average, determine whether its worth waiting for a better deal.Usually the best time for purchase is ${recommendedInMonthPeriod} of ${MONTH_MAPPING[minMonthIndex]} with average price of ${minMonthPrice}$.Its advisable to avoid purchasing at ${MONTH_MAPPING[maxMonthIndex]} with average price of ${maxMonthPrice}$.`;
 
     return {promptText, histogramData: shopToAveragesOfChunkedPrices};
 };
