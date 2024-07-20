@@ -18,7 +18,7 @@ export const SETTINGS = {
   SHOW_MIN:'Show Min',
   SHOW_MAX:'Show Max',
   SHOW_AVERAGE:'Show Average',
-  SHOW_STD:'Show STD',
+  SHOW_STD:'Show Standard Deviation',
   STORES_DATA:'Stores Data',
   SHOW_AMAZON:'Show Amazon',
   SHOW_KSP:'Show KSP',

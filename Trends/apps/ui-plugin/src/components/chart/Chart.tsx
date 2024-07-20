@@ -1,4 +1,4 @@
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend} from 'recharts';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 import {ChartData, StoresData} from "./chart.types";
 import {Grid, Typography} from "@mui/material";
@@ -50,8 +50,9 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
       {showStandardDeviation && <Grid item xs={6}>
         <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
       </Grid>}
-      {(showAmazonData || showIvoryData || showKSPData ) && <Grid item xs={12}>
-        <LineChart width={350} height={200}>
+      {(showAmazonData || showIvoryData || showKSPData ) && <Grid item  xs={12}>
+      <ResponsiveContainer width={'100%'} height={250} >
+        <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={<></>}/>
           ))}
@@ -61,6 +62,7 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
           <Tooltip/>
           <Legend/>
         </LineChart>
+      </ResponsiveContainer>
       </Grid>}
     </Grid>
   );

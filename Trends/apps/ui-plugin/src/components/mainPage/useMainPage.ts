@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useQueries, useQuery} from "@tanstack/react-query";
+import { useQuery} from "@tanstack/react-query";
 
 import {MainPageProps} from "./MainPage";
 import {getInsights} from "../../api/insights/insights";
@@ -56,8 +56,8 @@ export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
     productName,
     showTrends,
     onClick:() => setShowTrends((prevState)=>!prevState),
-    insights:data?.insights || insightsMock,
-    chartData: data?.chartData || chartDataMock,
+    insights: insightsMock,
+    chartData:  chartDataMock,
     storesData:storesData || storesDataMock,
     openSettings,
     userSettings:formState,
