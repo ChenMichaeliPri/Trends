@@ -1,4 +1,4 @@
-import {Button, Card, CardActions, CardContent, CardHeader, IconButton} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardHeader, IconButton, ThemeProvider, CssBaseline} from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps} from "react";
 
@@ -8,6 +8,7 @@ import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
 import {ChartData, StoresData} from "../chart/chart.types";
+import { getTheme } from "../../theme";
 
 export type MainPageProps = {
   productName:string;
@@ -22,9 +23,11 @@ export type MainPageProps = {
 }
 
 export const MainPage= ({productName,showTrends,onClick,insights,chartData,storesData,openSettings,userSettings,settingsProps}:MainPageProps) => {
+  const theme = getTheme(userSettings.inDarkMode);
   return (
-    <>
-      <Card>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Card sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}>
         <CardHeader
           title={MAIN_PAGE.TITLE_TEXT}
           subheader={MAIN_PAGE.SUBHEADER_TEXT.replace('{productName}',productName)}
@@ -34,17 +37,19 @@ export const MainPage= ({productName,showTrends,onClick,insights,chartData,store
             </IconButton>
           }
         />
-        <CardContent sx={{paddingTop:0 , width:600 , height:300 ,}}>
+        <CardContent sx={{ paddingTop: 0, width: 600, height: 300, backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}>
           {showTrends
             ? <Chart chartData={chartData} storesData={storesData} userSettings={userSettings}/>
             : <Insights insight={insights}/>
           }
         </CardContent>
         <CardActions>
-          <Button size='small' onClick={onClick}> {showTrends? MAIN_PAGE.INSIGHTS_BUTTON_TEXT: MAIN_PAGE.TRENDS_BUTTON_TEXT}</Button>
-        </CardActions>
+        <Button size='small' onClick={onClick} sx={{ color: theme.palette.text.primary }}>
+            {showTrends ? MAIN_PAGE.INSIGHTS_BUTTON_TEXT : MAIN_PAGE.TRENDS_BUTTON_TEXT} 
+            </Button>       
+          </CardActions>
       </Card>
       <Settings {...settingsProps} />
-    </>
+    </ThemeProvider>
   );
 }
