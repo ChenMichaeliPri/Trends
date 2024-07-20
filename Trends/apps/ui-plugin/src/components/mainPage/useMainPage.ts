@@ -8,9 +8,10 @@ import {insightsMock} from "../insights/insights.mock";
 import {useSettings} from "../settings/useSettings";
 import {chartDataMock, storesDataMock} from "../chart/chart.mock";
 import {getPrices} from "../../api/prices/prices";
+import {CurrentComponent} from "./mainPage.types";
 
 export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
-  const [showTrends , setShowTrends] = useState(true)
+  const [currentComponent , setCurrentComponent] = useState<CurrentComponent>('graph')
   const {openSettings,formState,...settingsProps} = useSettings()
   const [productId,setProductId] = useState('')
   const [productName,setProductName] = useState('')
@@ -57,8 +58,8 @@ export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
 
   return {
     productName,
-    showTrends,
-    onClick:() => setShowTrends((prevState)=>!prevState),
+    currentComponent,
+    setCurrentComponent,
     insights: insightsData?.insights || insightsMock,
     chartData: insightsData?.chartData || chartDataMock,
     storesData:storesData || storesDataMock,

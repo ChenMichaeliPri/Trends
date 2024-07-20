@@ -2,7 +2,7 @@ export const MAIN_PAGE = {
   TITLE_TEXT:'Price Pulse',
   SUBHEADER_TEXT:'Showing data for {productName}',
   TRENDS_BUTTON_TEXT:'Show Trends',
-  INSIGHTS_BUTTON_TEXT:'Show Insights'
+  INSIGHTS_BUTTON_TEXT:'Show Insights',
+  HISTOGRAM_BUTTON_TEXT:'Show Histogtam'
 }
-
 export const dateFormat = 'dd/MM/yyyy';
