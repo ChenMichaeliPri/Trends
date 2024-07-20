@@ -26,7 +26,7 @@ export const Chart = ({storesData, userSettings}:ChartProps) => {
   }
   return (
     <>
-      {(showAmazonData || showIvoryData || showKSPData ) && (<ResponsiveContainer width={'100%'} height={250} >
+      {(showAmazonData || showIvoryData || showKSPData ) && (<ResponsiveContainer width={'100%'} height={300} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>
@@ -38,6 +38,6 @@ export const Chart = ({storesData, userSettings}:ChartProps) => {
           <Legend/>
         </LineChart>
       </ResponsiveContainer>)}
-      </>
+    </>
   );
 }
