@@ -2,16 +2,18 @@ import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Responsiv
 import {ChartData, StoresData} from "./chart.types";
 import {Grid, Typography, ThemeProvider, CssBaseline} from "@mui/material";
 import {CHART, shopIdToNameMap} from "./chart.constants";
+
+import {StoresData} from "./chart.types";
+import { shopIdToNameMap } from "./chart.constants";
 import {UserSettings} from "../settings/settings.types";
 import { getTheme } from "../../theme";
 
 type ChartProps={
-  chartData:ChartData,
   storesData:StoresData,
   userSettings :UserSettings
 }
 
-export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
+export const Chart = ({storesData, userSettings}:ChartProps) => {
   const {
     inDarkMode,
     showCurrentPrice,
@@ -30,6 +32,7 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
     averagePrice,
     standardDeviation
   } = chartData;
+
   const filerStores = (storeId:string)=>{
     switch (storeId) {
       case '1': return showAmazonData;
@@ -61,6 +64,8 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
       </Grid>}
       {(showAmazonData || showIvoryData || showKSPData ) && <Grid item  xs={12}>
       <ResponsiveContainer width={'100%'} height={200} >
+    <>
+      {(showAmazonData || showIvoryData || showKSPData ) && (<ResponsiveContainer width={'100%'} height={250} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>
@@ -75,5 +80,7 @@ export const Chart = ({chartData,storesData, userSettings}:ChartProps) => {
       </Grid>}
     </Grid>
     </ThemeProvider>
+      </ResponsiveContainer>)}
+    </>
   );
 }
