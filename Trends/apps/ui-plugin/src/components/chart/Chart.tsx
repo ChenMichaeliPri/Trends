@@ -1,12 +1,8 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
-import {ChartData, StoresData} from "./chart.types";
-import {Grid, Typography, ThemeProvider, CssBaseline} from "@mui/material";
-import {CHART, shopIdToNameMap} from "./chart.constants";
 
 import {StoresData} from "./chart.types";
 import { shopIdToNameMap } from "./chart.constants";
 import {UserSettings} from "../settings/settings.types";
-import { getTheme } from "../../theme";
 
 type ChartProps={
   storesData:StoresData,
@@ -15,23 +11,10 @@ type ChartProps={
 
 export const Chart = ({storesData, userSettings}:ChartProps) => {
   const {
-    inDarkMode,
-    showCurrentPrice,
-    showMinPrice,
-    showMaxPrice,
-    showAveragePrice,
-    showStandardDeviation,
     showAmazonData,
     showIvoryData,
     showKSPData
   } = userSettings;
-  const {
-    currentPrice,
-    minPrice,
-    maxPrice,
-    averagePrice,
-    standardDeviation
-  } = chartData;
 
   const filerStores = (storeId:string)=>{
     switch (storeId) {
@@ -41,46 +24,20 @@ export const Chart = ({storesData, userSettings}:ChartProps) => {
       default: return false;
     }
   }
-  const theme = getTheme(inDarkMode);
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-    <Grid container spacing={1}  sx={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}>
-      {showCurrentPrice && <Grid item xs={6}> 
-        <Typography>{CHART.CURRENT_PRICE_TEXT.replace('{currentPrice}', currentPrice?.toString())}</Typography>
-      </Grid>}
-      {showMinPrice && <Grid item xs={6}>
-        <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
-      </Grid>}
-      {showMaxPrice && <Grid item xs={6}>
-        <Typography>{CHART.MAX_PRICE_TEXT.replace('{maxPrice}', maxPrice?.toString())}</Typography>
-      </Grid>}
-      {showAveragePrice && <Grid item xs={6}>
-        <Typography>{CHART.AVERAGE_PRICE_TEXT.replace('{averagePrice}', averagePrice?.toString())}</Typography>
-      </Grid>}
-      {showStandardDeviation && <Grid item xs={6}>
-        <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
-      </Grid>}
-      {(showAmazonData || showIvoryData || showKSPData ) && <Grid item  xs={12}>
-      <ResponsiveContainer width={'100%'} height={200} >
     <>
       {(showAmazonData || showIvoryData || showKSPData ) && (<ResponsiveContainer width={'100%'} height={250} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filerStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>
           ))}
-          <CartesianGrid stroke={theme.palette.divider} strokeDasharray="5 5"/>
-          <XAxis dataKey="date" allowDuplicatedCategory={false} tick={{ fill: theme.palette.text.primary }} />
-          <YAxis width={45} tick={{ fill: theme.palette.text.primary }} />
-          <Tooltip contentStyle={{ backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary }} />
+          <CartesianGrid strokeDasharray="5 5"/>
+          <XAxis dataKey="date" allowDuplicatedCategory={false}/>
+          <YAxis width={45}/>
+          <Tooltip/>
           <Legend/>
         </LineChart>
-      </ResponsiveContainer>
-      </Grid>}
-    </Grid>
-    </ThemeProvider>
       </ResponsiveContainer>)}
-    </>
+      </>
   );
 }

@@ -7,7 +7,9 @@ import {
   Divider,
   Grid,
   IconButton,
-  Typography
+  Typography,
+  ThemeProvider,
+  CssBaseline
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
@@ -19,7 +21,6 @@ import {UserSettings} from "../settings/settings.types";
 import {ChartData, StoresData} from "../chart/chart.types";
 import { CurrentComponent } from "./mainPage.types";
 import {CHART} from "../chart/chart.constants";
-import { getTheme } from "../../theme";
 
 export type MainPageProps = {
   productName:string;
@@ -34,7 +35,9 @@ export type MainPageProps = {
 }
 
 export const MainPage= ({productName,currentComponent,setCurrentComponent,insights,chartData,storesData,openSettings,userSettings,settingsProps}:MainPageProps) => {
+  const theme = getTheme(userSettings.inDarkMode);
   const {
+    showCurrentPrice,
     showMinPrice,
     showMaxPrice,
     showAveragePrice,
@@ -42,6 +45,7 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
   } = userSettings;
 
   const {
+    currentPrice,
     minPrice,
     maxPrice,
     averagePrice,
@@ -59,8 +63,9 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
   }
 
   return (
-    <>
-      <Card>
+      <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Card >
         <CardHeader
           titleTypographyProps={{fontWeight:'bold'}}
           title={MAIN_PAGE.TITLE_TEXT}
@@ -71,8 +76,11 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
             </IconButton>
           }
         />
-        <CardContent sx={{paddingTop:0 , width:700 , height:300 ,}}>
-          <Grid container spacing={1}>
+        <CardContent sx={{ paddingTop: 0, width: 700, height: 350}}>
+        <Grid container spacing={1}>
+            {showCurrentPrice && <Grid item xs={6}>
+              <Typography>{CHART.CURRENT_PRICE_TEXT.replace('{currentPrice}', currentPrice?.toString())}</Typography>
+            </Grid>}
             {showMinPrice && <Grid item xs={6}>
               <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
             </Grid>}
@@ -96,10 +104,10 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
         <CardActions sx={{justifyContent:'space-between'}}>
           <Button size='small' onClick={()=>setCurrentComponent('insights')} disabled={currentComponent === 'insights'}> {MAIN_PAGE.INSIGHTS_BUTTON_TEXT}</Button>
           <Button size='small' onClick={()=>setCurrentComponent('graph')} disabled={currentComponent === 'graph'}> {MAIN_PAGE.TRENDS_BUTTON_TEXT}</Button>
-          <Button size='small' onClick={()=>setCurrentComponent('histogram')} disabled={currentComponent === 'histogram'} > {MAIN_PAGE.HISTOGRAM_BUTTON_TEXT}</Button>
+          <Button size='small' onClick={()=>setCurrentComponent('histogram')} disabled={currentComponent === 'histogram'}> {MAIN_PAGE.HISTOGRAM_BUTTON_TEXT}</Button>
         </CardActions>
       </Card>
       <Settings {...settingsProps} />
-    </>
+      </ThemeProvider>
   );
 }
