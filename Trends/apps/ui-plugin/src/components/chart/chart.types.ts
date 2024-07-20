@@ -1,22 +1,23 @@
-export type DataPoint ={
-  date:string;
-  price:number;
-}
+export type DataPoint = {
+  date: string;
+  price: number;
+};
 
 export type StoresData = {
-  1?:DataPoint[];
-  2?:DataPoint[];
-  3?:DataPoint[];
-}
+  1?: DataPoint[];
+  2?: DataPoint[];
+  3?: DataPoint[];
+};
 
 export type ChartData = {
-  minPrice:number,
-  maxPrice:number,
-  averagePrice:number
-  standardDeviation:number
-}
+  currentPrice: number;
+  minPrice: number;
+  maxPrice: number;
+  averagePrice: number;
+  standardDeviation: number;
+};
 
 export type UIStore = {
-  storeName:string,
-  lineColor:string
-}
+  storeName: string;
+  lineColor: string;
+};

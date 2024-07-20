@@ -4,34 +4,51 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl, FormControlLabel, FormGroup, Grid, Switch, Typography
-} from "@mui/material";
-import {UserSettings} from "./settings.types";
-import {SETTINGS} from "./settings.constants";
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Switch,
+  Typography,
+} from '@mui/material';
+import { UserSettings } from './settings.types';
+import { SETTINGS } from './settings.constants';
 
-type SettingsProps ={
-  isSettingsOpen:boolean,
-  handleClose: ()=>void,
-  formState:UserSettings,
-  handleChange:(field:string,value:boolean)=>void,
-  handleReset:()=>void
-}
+type SettingsProps = {
+  isSettingsOpen: boolean;
+  handleClose: () => void;
+  formState: UserSettings;
+  handleChange: (field: string, value: boolean) => void;
+  handleReset: () => void;
+};
 
-export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,handleReset}:SettingsProps) =>{
-  return(
+export const Settings = ({
+  isSettingsOpen,
+  handleClose,
+  formState,
+  handleChange,
+  handleReset,
+}: SettingsProps) => {
+  return (
     <Dialog open={isSettingsOpen} onClose={handleClose} fullWidth>
       <DialogTitle>User Settings</DialogTitle>
       <DialogContent>
-        <FormControl >
+        <FormControl>
           <FormGroup>
-            <Grid container >
+            <Grid container>
               <Grid item xs={12}>
                 <Typography>{SETTINGS.GENERAL_SETTINGS}</Typography>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.inDarkMode} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="inDarkMode" />
+                    <Switch
+                      checked={formState.inDarkMode}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="inDarkMode"
+                    />
                   }
                   label={SETTINGS.USE_DARK_MODE}
                 />
@@ -42,7 +59,27 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showMinPrice} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showMinPrice" />
+                    <Switch
+                      checked={formState.showCurrentPrice}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showCurrentPrice"
+                    />
+                  }
+                  label={SETTINGS.SHOW_CURRENT}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={formState.showMinPrice}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showMinPrice"
+                    />
                   }
                   label={SETTINGS.SHOW_MIN}
                 />
@@ -50,7 +87,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showMaxPrice} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showMaxPrice" />
+                    <Switch
+                      checked={formState.showMaxPrice}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showMaxPrice"
+                    />
                   }
                   label={SETTINGS.SHOW_MAX}
                 />
@@ -58,7 +101,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showAveragePrice} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showAveragePrice" />
+                    <Switch
+                      checked={formState.showAveragePrice}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showAveragePrice"
+                    />
                   }
                   label={SETTINGS.SHOW_AVERAGE}
                 />
@@ -66,7 +115,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showStandardDeviation} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showStandardDeviation" />
+                    <Switch
+                      checked={formState.showStandardDeviation}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showStandardDeviation"
+                    />
                   }
                   label={SETTINGS.SHOW_STD}
                 />
@@ -77,7 +132,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showAmazonData} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showAmazonData" />
+                    <Switch
+                      checked={formState.showAmazonData}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showAmazonData"
+                    />
                   }
                   label={SETTINGS.SHOW_AMAZON}
                 />
@@ -85,7 +146,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showKSPData} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showKSPData" />
+                    <Switch
+                      checked={formState.showKSPData}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showKSPData"
+                    />
                   }
                   label={SETTINGS.SHOW_KSP}
                 />
@@ -93,7 +160,13 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
-                    <Switch checked={formState.showIvoryData} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showIvoryData" />
+                    <Switch
+                      checked={formState.showIvoryData}
+                      onChange={(e, checked) =>
+                        handleChange(e.target.name, checked)
+                      }
+                      name="showIvoryData"
+                    />
                   }
                   label={SETTINGS.SHOW_IVORY}
                 />
@@ -102,11 +175,10 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
           </FormGroup>
         </FormControl>
       </DialogContent>
-      <DialogActions sx={{justifyContent:'space-between'}}>
+      <DialogActions sx={{ justifyContent: 'space-between' }}>
         <Button onClick={handleReset}>{SETTINGS.RESET}</Button>
         <Button onClick={handleClose}>{SETTINGS.CLOSE}</Button>
       </DialogActions>
     </Dialog>
-    );
-
-}
+  );
+};
