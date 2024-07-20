@@ -176,11 +176,11 @@ export const getProductStatistics = (
         shopToPricesData[shopId].forEach(priceData => {
             allShopsPrices.push(Number(priceData.price));
 
-            if (Number(priceData.price) < minPriceData.price) {
+            if (Number(priceData.price) < Number(minPriceData.price)) {
                 minPriceData = priceData;
             }
 
-            if (Number(priceData.price) > maxPriceData.price) {
+            if (Number(priceData.price) > Number(maxPriceData.price)) {
                 maxPriceData = priceData;
             }
             
