@@ -2,6 +2,8 @@ import * as path from 'path';
 import fastifyCors from '@fastify/cors';
 import { FastifyInstance } from 'fastify';
 import AutoLoad from '@fastify/autoload';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import { fastifyMysql } from '@fastify/mysql';
 import { insightsRoutes } from './routes/insights';
 import { pricesRoutes } from './routes/prices';
@@ -40,6 +42,21 @@ export async function app(fastify: FastifyInstance, opts: AppOptions) {
 
   fastify.register(fastifyCors, { 
     origin: '*' 
+  });
+
+  fastify.register(fastifySwagger, {
+    swagger: {
+      info: {
+          title: 'Price Pulse API',
+          version: '1.0.0'
+      },
+    }
+  });
+
+  // @ts-ignore
+  fastify.register(fastifySwaggerUi, {
+    routePrefix: '/swagger',
+    exposeRoute: true
   });
 
   fastify.register(insightsRoutes, {
