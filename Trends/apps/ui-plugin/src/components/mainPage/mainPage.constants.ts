@@ -4,3 +4,5 @@ export const MAIN_PAGE = {
   TRENDS_BUTTON_TEXT:'Show Trends',
   INSIGHTS_BUTTON_TEXT:'Show Insights'
 }
+
+export const dateFormat = 'dd/MM/yyyy';

@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import {FetchedInsights} from "../../api/insights/insights.types";
 import {ChartData, DataPoint, StoresData} from "../chart/chart.types";
 import {FetchedPrices, Price} from "../../api/prices/prices.types";
+import {dateFormat} from "./mainPage.constants";
 
 export const insightsDataAdapter = (data:FetchedInsights) :{chartData:ChartData,insights:string,histogramData:Record<number, number[]>} =>{
   return ({
@@ -19,7 +20,7 @@ export const insightsDataAdapter = (data:FetchedInsights) :{chartData:ChartData,
 
 const priceAdapter = ({price,timestamp}:Price):DataPoint=>({
   price,
-  date:format(new Date(timestamp),'dd/MM/yyyy')
+  date:format(new Date(timestamp),dateFormat)
 });
 export const pricesDataAdapter = (data:FetchedPrices):StoresData =>(
   {

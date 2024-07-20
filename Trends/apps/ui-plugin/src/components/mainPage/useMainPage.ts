@@ -12,23 +12,25 @@ import {getPrices} from "../../api/prices/prices";
 export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
   const [showTrends , setShowTrends] = useState(true)
   const {openSettings,formState,...settingsProps} = useSettings()
-  const [productId,setProductId] = useState('1')
-  const [productName,setProductName] = useState('Samsung Galaxy S21 5G (128GB 8GB)')
+  const [productId,setProductId] = useState('')
+  const [productName,setProductName] = useState('')
   const [initialLoading,setInitialLoading] = useState(true);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data:insightsData, isLoading:isInsightsDataLoading} = useQuery({
     queryKey:['insights',productId],
     queryFn:() => getInsights(productId),
     select:(data)=>insightsDataAdapter(data),
-    enabled:false
+    enabled:!!productId,
+    staleTime:Infinity
     }
   )
 
-  const { data:storesData, isLoading:isStoresDataLoading, refetch:refetchStoresData } = useQuery({
+  const { data:storesData, isLoading:isStoresDataLoading} = useQuery({
       queryKey:['prices',productId],
       queryFn:() => getPrices(productId),
       select:(data)=>pricesDataAdapter(data),
-      enabled:false
+      enabled:!!productId,
+      staleTime:Infinity
     }
   )
 
@@ -36,20 +38,21 @@ export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
   useEffect(() => {
     chrome?.runtime?.sendMessage({ message: "get_url" }, (response) => {
       if (response && response.url) {
+        console.log('Production')
         console.log(`Current URL: ${response.url}`);
         const parsedUrl = new URL(response.url);
         const searchParams = new URLSearchParams(parsedUrl.search)
         setProductId(searchParams.get('productId') || '')
-        setProductName(searchParams.get('productName')|| '')
-      }
-      else{
-        setProductId( '1')
-        setProductName( 'Samsung Galaxy S21 5G (128GB 8GB)')
+        setProductName(searchParams.get('productName')|| 'Cant find query params')
       }
     });
-    refetch();
-    refetchStoresData();
+    if (!chrome?.runtime){
+        console.log('Dev');
+        setProductId('1');
+        setProductName( 'Samsung Galaxy S21 5G (128GB 8GB)');
+    }
     setInitialLoading(false)
+    return () => setInitialLoading(true)
   }, []);
 
   return {
@@ -62,6 +65,6 @@ export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
     openSettings,
     userSettings:formState,
     settingsProps:{...settingsProps,formState},
-    isLoading:initialLoading || isLoading
+    isLoading:initialLoading || isInsightsDataLoading || isStoresDataLoading
   }
 }
