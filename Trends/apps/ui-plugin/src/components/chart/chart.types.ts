@@ -4,9 +4,9 @@ export type DataPoint ={
 }
 
 export type StoresData = {
-  1:DataPoint[];
-  2:DataPoint[];
-  3:DataPoint[];
+  1?:DataPoint[];
+  2?:DataPoint[];
+  3?:DataPoint[];
 }
 
 export type ChartData = {
