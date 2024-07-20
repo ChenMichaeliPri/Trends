@@ -1,11 +1,11 @@
-import { ChartData, DataPoint, StoresData } from './chart.types';
+import {ChartData, DataPoint, StoresData} from "./chart.types";
 
-export const currentPriceMoce = 1234;
+export const currentPriceMock = 1234;
 export const minPriceMock = 1000;
 export const maxPriceMock = 3000;
-export const averagePriceMock = 2000;
-export const standardDeviationMock = 1000;
-export const ivoryDataMock: DataPoint[] = [
+export const averagePriceMock= 2000;
+export const standardDeviationMock=1000;
+export const ivoryDataMock:DataPoint[] = [
   { date: '01-01-23', price: 120 },
   { date: '02-01-23', price: 119 },
   { date: '03-01-23', price: 118 },
@@ -36,7 +36,7 @@ export const ivoryDataMock: DataPoint[] = [
   { date: '15-09-23', price: 154 },
   { date: '31-12-23', price: 130 },
 ];
-export const amazonDataMock: DataPoint[] = [
+export const amazonDataMock:DataPoint[] = [
   { date: '01-01-23', price: 220 },
   { date: '02-01-23', price: 219 },
   { date: '03-01-23', price: 218 },
@@ -59,7 +59,7 @@ export const amazonDataMock: DataPoint[] = [
   { date: '04-06-23', price: 248 },
   { date: '05-06-23', price: 246 },
   { date: '06-06-23', price: 244 },
-  { date: '10-09-23', price: 200 }, // Peak
+  { date: '10-09-23', price: 200}, // Peak
   { date: '11-09-23', price: 165 },
   { date: '12-09-23', price: 60 }, //Peak
   { date: '13-09-23', price: 158 },
@@ -67,7 +67,7 @@ export const amazonDataMock: DataPoint[] = [
   { date: '15-09-23', price: 154 },
   { date: '31-12-23', price: 130 },
 ];
-export const kspDataMock: DataPoint[] = [
+export const kspDataMock:DataPoint[] = [
   { date: '01-01-23', price: 320 },
   { date: '02-01-23', price: 319 },
   { date: '03-01-23', price: 318 },
@@ -99,16 +99,16 @@ export const kspDataMock: DataPoint[] = [
   { date: '31-12-23', price: 130 },
 ];
 
-export const storesDataMock: StoresData = {
-  1: amazonDataMock,
-  2: kspDataMock,
-  3: ivoryDataMock,
-};
+export const storesDataMock : StoresData = {
+  1:amazonDataMock,
+  2:kspDataMock,
+  3:ivoryDataMock
+}
 
-export const chartDataMock: ChartData = {
-  currentPrice: currentPriceMoce,
-  minPrice: minPriceMock,
-  maxPrice: maxPriceMock,
-  averagePrice: averagePriceMock,
-  standardDeviation: standardDeviationMock,
-};
+export const chartDataMock :ChartData ={
+  currentPrice: currentPriceMock,
+  minPrice:minPriceMock,
+  maxPrice:maxPriceMock,
+  averagePrice:averagePriceMock,
+  standardDeviation:standardDeviationMock
+}
