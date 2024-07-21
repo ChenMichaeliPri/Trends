@@ -14,11 +14,12 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
 
-import {Chart} from "../chart/Chart";
+import {Chart} from "../chart/LineChart";
+import { Histogram } from "../chart/Histogram";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
-import {ChartData, StoresData} from "../chart/chart.types";
+import {ChartData, StoresData, HistogramData} from "../chart/chart.types";
 import { CurrentComponent } from "./mainPage.types";
 import {CHART} from "../chart/chart.constants";
 import { getTheme } from "../../theme";
@@ -30,12 +31,13 @@ export type MainPageProps = {
   insights:string;
   chartData:ChartData;
   storesData:StoresData
+  histogramData:HistogramData;
   openSettings:()=>void;
   userSettings:UserSettings;
   settingsProps:ComponentProps<typeof Settings>
 }
 
-export const MainPage= ({productName,currentComponent,setCurrentComponent,insights,chartData,storesData,openSettings,userSettings,settingsProps}:MainPageProps) => {
+export const MainPage= ({productName,currentComponent,setCurrentComponent,insights,chartData,storesData,histogramData,openSettings,userSettings,settingsProps}:MainPageProps) => {
   const theme = getTheme(userSettings.inDarkMode);
   const {
     showCurrentPrice,
@@ -60,7 +62,7 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
         {insights}
       </Typography>
     ),
-    histogram:<></>
+    histogram:<Histogram histogramData={histogramData} userSettings={userSettings}/>
   }
 
   return (
@@ -77,7 +79,7 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
             </IconButton>
           }
         />
-        <CardContent sx={{ paddingTop: 0, width: 700, height: 350}}>
+        <CardContent sx={{ paddingTop: 0, width: 700, height: 400}}>
         <Grid container spacing={1}>
             {showCurrentPrice && <Grid item xs={6}>
               <Typography>{CHART.CURRENT_PRICE_TEXT.replace('{currentPrice}', currentPrice?.toString())}</Typography>

@@ -6,7 +6,7 @@ import {getInsights} from "../../api/insights/insights";
 import {insightsDataAdapter, pricesDataAdapter} from "./mainPage.services";
 import {insightsMock} from "../insights/insights.mock";
 import {useSettings} from "../settings/useSettings";
-import {chartDataMock, storesDataMock} from "../chart/chart.mock";
+import {chartDataMock, storesDataMock, histogramDataMock} from "../chart/chart.mock";
 import {getPrices} from "../../api/prices/prices";
 import {CurrentComponent} from "./mainPage.types";
 
@@ -63,6 +63,7 @@ export const useMainPage = ():MainPageProps & {isLoading:boolean} =>{
     insights: insightsData?.insights || insightsMock,
     chartData: insightsData?.chartData || chartDataMock,
     storesData:storesData || storesDataMock,
+    histogramData: insightsData?.histogramData || histogramDataMock,
     openSettings,
     userSettings:formState,
     settingsProps:{...settingsProps,formState},
