@@ -1,4 +1,4 @@
-import { UserSettings } from "../settings/settings.types";
+import {PriceRecord} from "../../../../api-price-insights/src/app/data-models/sql-data-models"
 
 export type DataPoint ={
   date:string;
@@ -18,11 +18,11 @@ export type HistogramData = {
 }
 
 export type ChartData = {
-  currentPrice:number,
   minPrice:number,
   maxPrice:number,
   averagePrice:number
-  standardDeviation:number
+  standardDeviation:number,
+  shopToCurrentPriceData:Record<number,PriceRecord>,
 }
 
 export type UIStore = {

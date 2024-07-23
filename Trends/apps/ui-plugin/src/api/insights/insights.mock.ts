@@ -2,15 +2,14 @@ import {FetchedInsights} from "./insights.types";
 
 export const fetchedInsightsMock:FetchedInsights ={
   productId: 1,
-  current: 555,
   min: 15.01,
   max: 56.83,
   average: 611,
   standardDeviation:1041,
   shopToCurrentPriceData:{
-    1:{price:18.05},
-    2:{price:19},
-    3:{price:20}
+    1:{id:1, productId:1, shopId:1, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')},
+    2:{id:2, productId:1, shopId:2, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')},
+    3:{id:3, productId:1, shopId:3, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')}
   },
   insights:"According to our data, the current best price is in Amazon - approximately 18.05$.\n    This is lower than the average price of 611$.\n    This week the price is lower than 100% of the weeks for the past 2 years.\n    With a standard deviation of 1041$ from average, determine whether its worth waiting for a better deal.\n    Usually the best time for purchase is beginning of April in Amazon with prices around 15$.\n    Its advisable to avoid purchasing at the beginning of November.\n ",
   histogramData:{

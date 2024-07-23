@@ -14,7 +14,7 @@ interface ProductShops {
     shopIds: number[];
 }
 
-interface PriceRecord {
+export interface PriceRecord {
     id: number;
     productId: number;
     shopId: number;

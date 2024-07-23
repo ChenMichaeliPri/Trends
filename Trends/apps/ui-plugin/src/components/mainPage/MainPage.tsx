@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
-
+import {PriceRecord} from "../../../../api-price-insights/src/app/data-models/sql-data-models"
 import {Chart} from "../chart/LineChart";
 import { Histogram } from "../chart/Histogram";
 import {Settings} from "../settings/Settings"
@@ -21,7 +21,7 @@ import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
 import {ChartData, StoresData, HistogramData} from "../chart/chart.types";
 import { CurrentComponent } from "./mainPage.types";
-import {CHART} from "../chart/chart.constants";
+import {CHART, shopIdToNameMap} from "../chart/chart.constants";
 import { getTheme } from "../../theme";
 
 export type MainPageProps = {
@@ -48,11 +48,11 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
   } = userSettings;
 
   const {
-    currentPrice,
     minPrice,
     maxPrice,
     averagePrice,
-    standardDeviation
+    standardDeviation,
+    shopToCurrentPriceData
   } = chartData;
 
   const CURRENT_COMPONENT_MAP :Record<CurrentComponent,ReactElement>  ={
@@ -64,6 +64,15 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
     ),
     histogram:<Histogram histogramData={histogramData} userSettings={userSettings}/>
   }
+
+  const getCheapestPriceData = (shopToCurrentPriceData: Record<number, PriceRecord>): PriceRecord | null => {
+    return Object.values(shopToCurrentPriceData).reduce((cheapest, current) => {
+      return current.price < (cheapest?.price || Infinity) ? current : cheapest;
+    }, null as PriceRecord | null);
+  };
+
+  const cheapestPriceData = getCheapestPriceData(shopToCurrentPriceData);
+  const cheapestStoreName = cheapestPriceData ? shopIdToNameMap[cheapestPriceData.shopId]?.storeName || 'Unknown Store' : 'Unknown Store';
 
   return (
       <ThemeProvider theme={theme}>
@@ -80,10 +89,17 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
           }
         />
         <CardContent sx={{ paddingTop: 0, width: 700, height: 400}}>
-        <Grid container spacing={1}>
-            {showCurrentPrice && <Grid item xs={6}>
-              <Typography>{CHART.CURRENT_PRICE_TEXT.replace('{currentPrice}', currentPrice?.toString())}</Typography>
+        <Grid container spacing={1} sx={{ marginBottom: 2 }}>
+          {showCurrentPrice && <Grid item xs={12}>
+              <Typography>{cheapestPriceData
+                            ? CHART.CURRENT_PRICE_TEXT
+                                .replace('{currentPrice}', cheapestPriceData.price.toFixed(2))
+                                .replace('{cheapestStoreName}', cheapestStoreName)
+                            : 'No data available'}</Typography>
             </Grid>}
+          </Grid>  
+        <Grid container spacing={1}>
+          
             {showMinPrice && <Grid item xs={6}>
               <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
             </Grid>}

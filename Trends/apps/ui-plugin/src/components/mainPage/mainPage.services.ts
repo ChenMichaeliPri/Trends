@@ -8,11 +8,11 @@ import {dateFormat} from "./mainPage.constants";
 export const insightsDataAdapter = (data:FetchedInsights) :{chartData:ChartData,insights:string,histogramData:Record<number, number[]>} =>{
   return ({
     chartData: {
-      currentPrice: data.current,
       minPrice: data.min,
       maxPrice: data.max,
       averagePrice: data.average,
-      standardDeviation: data.standardDeviation
+      standardDeviation: data.standardDeviation,
+      shopToCurrentPriceData: data.shopToCurrentPriceData
     },
     insights: data.insights,
     histogramData: data.histogramData

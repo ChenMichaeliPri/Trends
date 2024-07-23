@@ -1,7 +1,7 @@
 import {UIStore} from "./chart.types";
 
 export const CHART = {
-  CURRENT_PRICE_TEXT: 'Current Price: {currentPrice}$',
+  CURRENT_PRICE_TEXT: 'Current Cheapest Price: {currentPrice}$ from {cheapestStoreName}',
   MIN_PRICE_TEXT:'Min Price: {minPrice}$',
   MAX_PRICE_TEXT:'Max Price: {maxPrice}$',
   AVERAGE_PRICE_TEXT:'Average Price: {averagePrice}$',

@@ -1,6 +1,6 @@
+import { timeStamp } from "console";
 import {ChartData, DataPoint, HistogramData, StoresData} from "./chart.types";
 
-export const currentPriceMock = 1234;
 export const minPriceMock = 1000;
 export const maxPriceMock = 3000;
 export const averagePriceMock= 2000;
@@ -105,12 +105,18 @@ export const storesDataMock : StoresData = {
   3:ivoryDataMock
 }
 
+export const shopToCurrentPriceDataMock = {
+  1:{id:1, productId:1, shopId:1, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')},
+  2:{id:2, productId:1, shopId:2, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')},
+  3:{id:3, productId:1, shopId:3, price:18.05, timestamp: new Date('2024-07-21T12:00:00Z')}
+}
+
 export const chartDataMock :ChartData ={
-  currentPrice: currentPriceMock,
   minPrice:minPriceMock,
   maxPrice:maxPriceMock,
   averagePrice:averagePriceMock,
-  standardDeviation:standardDeviationMock
+  standardDeviation:standardDeviationMock,
+  shopToCurrentPriceData:shopToCurrentPriceDataMock
 }
 
 export const histogramDataMock:HistogramData = {
