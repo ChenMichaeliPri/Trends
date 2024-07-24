@@ -59,6 +59,7 @@ function getHrefForVariant(product: ProductListItemFragment, variant: VariantDet
 	return `${pathname}?${query.toString()}`;
 }
 
+// Encoded name does not match name in DB
 const productNameToId = new Map<string, number>([
 	['la-roche-posay-toleriane-hydrating-gentle-face-cleanser', 1],
 	['harry-potter-paperbackbox-set-books-1-7', 2],
