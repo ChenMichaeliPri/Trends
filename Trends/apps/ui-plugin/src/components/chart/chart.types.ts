@@ -1,4 +1,4 @@
-import {PriceRecord} from "../../../../api-price-insights/src/app/data-models/sql-data-models"
+import { PriceRecord } from '../../api/insights/insights.types'
 
 export type DataPoint ={
   date:string;

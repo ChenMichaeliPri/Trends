@@ -13,13 +13,13 @@ import {
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
-import {PriceRecord} from "../../../../api-price-insights/src/app/data-models/sql-data-models"
 import {Chart} from "../chart/LineChart";
 import { Histogram } from "../chart/Histogram";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
-import {ChartData, StoresData, HistogramData} from "../chart/chart.types";
+import {ChartData, StoresData, HistogramData } from "../chart/chart.types";
+import { PriceRecord } from "../../api/insights"
 import { CurrentComponent } from "./mainPage.types";
 import {CHART, shopIdToNameMap} from "../chart/chart.constants";
 import { getTheme } from "../../theme";
@@ -97,9 +97,9 @@ export const MainPage= ({productName,currentComponent,setCurrentComponent,insigh
                                 .replace('{cheapestStoreName}', cheapestStoreName)
                             : 'No data available'}</Typography>
             </Grid>}
-          </Grid>  
+          </Grid>
         <Grid container spacing={1}>
-          
+
             {showMinPrice && <Grid item xs={6}>
               <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
             </Grid>}

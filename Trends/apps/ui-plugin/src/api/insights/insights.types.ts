@@ -1,4 +1,10 @@
-import {PriceRecord} from "../../../../api-price-insights/src/app/data-models/sql-data-models"
+export type PriceRecord = {
+  id: number;
+  productId: number;
+  shopId: number;
+  price: number;
+  timestamp: Date;
+}
 
 export type FetchedInsights = {
   productId: number,
