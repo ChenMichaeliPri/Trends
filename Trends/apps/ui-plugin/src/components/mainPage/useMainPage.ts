@@ -4,9 +4,9 @@ import {useQuery} from "@tanstack/react-query";
 import {MainPageProps} from "./MainPage";
 import {getInsights} from "../../api/insights/insights";
 import {insightsDataAdapter, pricesDataAdapter} from "./mainPage.services";
-import {insightsMock} from "../insights/insights.mock";
+import {insightsMock} from "../../api/insights/insights.mock"
 import {useSettings} from "../settings/useSettings";
-import {pricesDataMock, storesDataMock, histogramDataMock} from "../chart/chart.mock";
+import {pricesDataMock, storesDataMock, histogramDataMock} from "../charts/charts.mock";
 import {getPrices} from "../../api/prices/prices";
 import {CurrentComponent} from "./mainPage.types";
 

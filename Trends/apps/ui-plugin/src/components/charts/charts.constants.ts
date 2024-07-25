@@ -1,4 +1,4 @@
-import {UIStore} from "./chart.types";
+import {UIStore} from "./charts.types";
 
 export const CHART = {
   CURRENT_PRICE_TEXT: 'Current Cheapest Price: {currentPrice}$ from {cheapestStoreName}',

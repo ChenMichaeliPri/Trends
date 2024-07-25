@@ -1,8 +1,8 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
-import { shopIdToNameMap } from "./chart.constants";
-import { useFilterStores } from '../../hooks/useFilterStores';
-import { StoresData } from './chart.types';
+import { shopIdToNameMap } from "./charts.constants";
+import { useFilterStores } from './hooks/useFilterStores';
+import { StoresData } from './charts.types';
 import { UserSettings } from '../settings/settings.types';
 
 type LineChartProps={
@@ -15,7 +15,7 @@ export const Chart = ({storesData, userSettings}:LineChartProps) => {
 
   return (
     <>
-      {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData ) && 
+      {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData ) &&
       (<ResponsiveContainer width={'100%'} height={300} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filterStores(storeId)).map(([shopId, data]) => (

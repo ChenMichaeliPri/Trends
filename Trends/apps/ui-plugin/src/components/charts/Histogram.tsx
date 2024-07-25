@@ -1,7 +1,7 @@
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
-import { useFilterStores } from '../../hooks/useFilterStores';
-import { shopIdToNameMap } from "./chart.constants";
-import { HistogramData } from './chart.types';
+import { useFilterStores } from './hooks/useFilterStores';
+import { shopIdToNameMap } from "./charts.constants";
+import { HistogramData } from './charts.types';
 import { UserSettings } from '../settings/settings.types';
 
 type HistogramProps = {
@@ -25,7 +25,7 @@ export const Histogram = ({ histogramData, userSettings }: HistogramProps) => {
 
   Object.entries(histogramData).forEach(([storeId, prices]) => {
     const counts: Record<number, number> = {};
-    
+
     prices.forEach(price => {
       const bin = Math.floor(price / binSize) * binSize;
       counts[bin] = (counts[bin] || 0) + 1;
@@ -39,7 +39,7 @@ export const Histogram = ({ histogramData, userSettings }: HistogramProps) => {
 
   return (
     <>
-      {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData) && 
+      {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData) &&
       (<ResponsiveContainer width={'100%'} height={300}>
         <BarChart data={Object.entries(binCounts).flatMap(([storeId, bins]) =>
           bins.map(bin => ({

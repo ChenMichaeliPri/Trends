@@ -13,14 +13,14 @@ import {
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
-import {Chart} from "../chart/LineChart";
-import {Histogram} from "../chart/Histogram";
+import {Chart} from "../charts/LineChart";
+import {Histogram} from "../charts/Histogram";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
 import {UserSettings} from "../settings/settings.types";
-import {StoresData, HistogramData} from "../chart/chart.types";
+import {StoresData, HistogramData} from "../charts/charts.types";
 import {PricesData, CurrentComponent} from "./mainPage.types";
-import {CHART} from "../chart/chart.constants";
+import {CHART} from "../charts/charts.constants";
 import {getTheme} from "../../theme";
 
 export type MainPageProps = {

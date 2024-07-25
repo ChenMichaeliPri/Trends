@@ -1,13 +1,13 @@
-import {DataPoint, HistogramData, StoresData} from "./chart.types";
+import {DataPoint, HistogramData, StoresData} from "./charts.types";
 import {PricesData} from "../mainPage/mainPage.types";
 
-export const minPriceMock = 1000;
-export const maxPriceMock = 3000;
-export const averagePriceMock = 2000;
-export const standardDeviationMock = 1000;
+const minPriceMock = 1000;
+const maxPriceMock = 3000;
+const averagePriceMock = 2000;
+const standardDeviationMock = 1000;
 const cheapestStoreNameMock = "Amazon"
 const cheapestStorePriceMock = 18.05
-export const ivoryDataMock: DataPoint[] = [
+const ivoryDataMock: DataPoint[] = [
     {date: '01-01-23', price: 120},
     {date: '02-01-23', price: 119},
     {date: '03-01-23', price: 118},
@@ -38,7 +38,7 @@ export const ivoryDataMock: DataPoint[] = [
     {date: '15-09-23', price: 154},
     {date: '31-12-23', price: 130},
 ];
-export const amazonDataMock: DataPoint[] = [
+const amazonDataMock: DataPoint[] = [
     {date: '01-01-23', price: 220},
     {date: '02-01-23', price: 219},
     {date: '03-01-23', price: 218},
@@ -69,7 +69,7 @@ export const amazonDataMock: DataPoint[] = [
     {date: '15-09-23', price: 154},
     {date: '31-12-23', price: 130},
 ];
-export const kspDataMock: DataPoint[] = [
+const kspDataMock: DataPoint[] = [
     {date: '01-01-23', price: 320},
     {date: '02-01-23', price: 319},
     {date: '03-01-23', price: 318},
@@ -105,12 +105,6 @@ export const storesDataMock: StoresData = {
     1: amazonDataMock,
     2: kspDataMock,
     3: ivoryDataMock
-}
-
-export const shopToCurrentPriceDataMock = {
-    1: {id: 1, productId: 1, shopId: 1, price: 18.05, timestamp: new Date('2024-07-21T12:00:00Z')},
-    2: {id: 2, productId: 1, shopId: 2, price: 18.00, timestamp: new Date('2024-07-21T12:00:00Z')},
-    3: {id: 3, productId: 1, shopId: 3, price: 17.05, timestamp: new Date('2024-07-21T12:00:00Z')}
 }
 
 export const pricesDataMock: PricesData = {

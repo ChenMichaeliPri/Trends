@@ -1,10 +1,10 @@
 import {format} from 'date-fns';
 
 import {FetchedInsights, PriceRecord} from "../../api/insights/insights.types";
-import {DataPoint, StoresData} from "../chart/chart.types";
+import {DataPoint, StoresData} from "../charts/charts.types";
 import {FetchedPrices, Price} from "../../api/prices/prices.types";
 import {dateFormat} from "./mainPage.constants";
-import {shopIdToNameMap} from "../chart/chart.constants";
+import {shopIdToNameMap} from "../charts/charts.constants";
 import {PricesData} from "./mainPage.types";
 
 export const insightsDataAdapter = (data: FetchedInsights): { pricesData: PricesData, insights: string, histogramData: Record<number, number[]> } => {
