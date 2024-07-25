@@ -100,7 +100,7 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
                             <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
                         </Grid>}
                         <Grid item xs={12}>
-                            <Divider/>
+                            <Divider sx={{borderWidth:1}}/>
                         </Grid>
                         <Grid item xs={12}>
                             {CURRENT_COMPONENT_MAP[currentComponent]}

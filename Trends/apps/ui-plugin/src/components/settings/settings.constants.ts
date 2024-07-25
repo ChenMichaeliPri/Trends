@@ -14,17 +14,17 @@ export const defaultSettings:UserSettings={
 
 export const SETTINGS = {
   GENERAL_SETTINGS:'General Settings',
-  USE_DARK_MODE:'Use Dark Mode',
+  USE_DARK_MODE:'Dark Mode',
   PRICES:'Prices',
   SHOW_CURRENT:'Show Current Price',
-  SHOW_MIN:'Show Min',
-  SHOW_MAX:'Show Max',
-  SHOW_AVERAGE:'Show Average',
-  SHOW_STD:'Show Standard Deviation',
+  SHOW_MIN:'Min',
+  SHOW_MAX:'Max',
+  SHOW_AVERAGE:'Average',
+  SHOW_STD:'Standard Deviation',
   STORES_DATA:'Stores Data',
-  SHOW_AMAZON:'Show Amazon',
-  SHOW_KSP:'Show KSP',
-  SHOW_IVORY:'Show Ivory',
+  SHOW_AMAZON:'Amazon',
+  SHOW_KSP:'KSP',
+  SHOW_IVORY:'Ivory',
   RESET:'Reset To Default',
   CLOSE:'Close'
 

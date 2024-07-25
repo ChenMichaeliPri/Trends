@@ -53,7 +53,18 @@ export function VariantSelector({
 }
 
 function getHrefForVariant(product: ProductListItemFragment, variant: VariantDetailsFragment): string {
-	const pathname = `/products/${encodeURIComponent(product.slug)}`;
-	const query = new URLSearchParams({ variant: variant.id });
+	const encodedProductName = encodeURIComponent(product.slug);
+	const pathname = `/products/${encodedProductName}`;
+	const query = new URLSearchParams({ variant: variant.id, productId: String(productNameToId.get(encodedProductName)), productName: encodedProductName });
 	return `${pathname}?${query.toString()}`;
 }
+
+// Encoded name does not match name in DB
+const productNameToId = new Map<string, number>([
+	['la-roche-posay-toleriane-hydrating-gentle-face-cleanser', 1],
+	['harry-potter-paperbackbox-set-books-1-7', 2],
+	['kitchenaid-classic-series-45-quart-tilt-head-stand-mixer', 3],
+	['lego-classic-medium-creative-brick-box-10696-building-toy-set', 4],
+	['samsung-galaxy-s21-5g-128gb-8gb', 5],
+	['poly-bark-napa-leather-couch', 6]
+]);

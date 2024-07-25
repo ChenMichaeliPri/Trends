@@ -4,7 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl, FormControlLabel, FormGroup, Grid, Switch, Typography
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Switch,
+  Typography
 } from "@mui/material";
 import {UserSettings} from "./settings.types";
 import {SETTINGS} from "./settings.constants";
@@ -24,9 +30,12 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
       <DialogContent>
         <FormControl >
           <FormGroup>
-            <Grid container >
+            <Grid container>
               <Grid item xs={12}>
                 <Typography>{SETTINGS.GENERAL_SETTINGS}</Typography>
+              </Grid>
+              <Grid item xs={12} sx={{marginTop:1,marginBottom:1}}>
+                <Divider sx={{borderWidth:1}}/>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -38,6 +47,9 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               </Grid>
               <Grid item xs={12}>
                 <Typography>{SETTINGS.PRICES}</Typography>
+              </Grid>
+              <Grid item xs={12} sx={{marginTop:1,marginBottom:1}}>
+                <Divider sx={{borderWidth:1}}/>
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
@@ -81,6 +93,9 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               </Grid>
               <Grid item xs={12}>
                 <Typography>{SETTINGS.STORES_DATA}</Typography>
+              </Grid>
+              <Grid item xs={12} sx={{marginTop:1,marginBottom:1}}>
+                <Divider sx={{borderWidth:1}}/>
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
