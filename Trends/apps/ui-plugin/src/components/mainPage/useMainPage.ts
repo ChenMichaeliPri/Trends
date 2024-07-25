@@ -43,8 +43,9 @@ export const useMainPage = (): MainPageProps & { isLoading: boolean } => {
                 console.log(`Current URL: ${response.url}`);
                 const parsedUrl = new URL(response.url);
                 const searchParams = new URLSearchParams(parsedUrl.search)
+                const parsedName = searchParams.get('productName')?.replace(/-/g,' ').replace(/\b\w/g, char => char.toUpperCase());
                 setProductId(searchParams.get('productId') || '')
-                setProductName(searchParams.get('productName') || 'Cant find query params')
+                setProductName(parsedName || 'Cant find query params')
             }
         });
         if (!chrome?.runtime) {
