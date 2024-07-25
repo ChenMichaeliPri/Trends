@@ -3,6 +3,6 @@ export const MAIN_PAGE = {
   SUBHEADER_TEXT:'Showing data for {productName}',
   TRENDS_BUTTON_TEXT:'Show Trends',
   INSIGHTS_BUTTON_TEXT:'Show Insights',
-  HISTOGRAM_BUTTON_TEXT:'Show Histogtam'
+  HISTOGRAM_BUTTON_TEXT:'Show Histogram'
 }
 export const dateFormat = 'dd/MM/yyyy';

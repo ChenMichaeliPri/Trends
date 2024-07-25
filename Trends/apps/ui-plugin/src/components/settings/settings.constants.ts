@@ -2,6 +2,7 @@ import {UserSettings} from "./settings.types";
 
 export const defaultSettings:UserSettings={
   inDarkMode:false,
+  showCurrentPrice:true,
   showMinPrice:true,
   showMaxPrice:true,
   showAveragePrice:true,
@@ -15,6 +16,7 @@ export const SETTINGS = {
   GENERAL_SETTINGS:'General Settings',
   USE_DARK_MODE:'Dark Mode',
   PRICES:'Prices',
+  SHOW_CURRENT:'Show Current Price',
   SHOW_MIN:'Min',
   SHOW_MAX:'Max',
   SHOW_AVERAGE:'Average',

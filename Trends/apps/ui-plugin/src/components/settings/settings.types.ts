@@ -1,5 +1,6 @@
 export type UserSettings = {
   inDarkMode:boolean,
+  showCurrentPrice:boolean,
   showMinPrice:boolean,
   showMaxPrice:boolean,
   showAveragePrice:boolean,

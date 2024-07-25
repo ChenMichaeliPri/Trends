@@ -54,6 +54,14 @@ export const Settings = ({isSettingsOpen , handleClose,formState,handleChange,ha
               <Grid item xs={6}>
                 <FormControlLabel
                   control={
+                    <Switch checked={formState.showCurrentPrice} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showCurrentPrice" />
+                  }
+                  label={SETTINGS.SHOW_CURRENT}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={
                     <Switch checked={formState.showMinPrice} onChange={(e, checked)=>handleChange(e.target.name,checked)} name="showMinPrice" />
                   }
                   label={SETTINGS.SHOW_MIN}
