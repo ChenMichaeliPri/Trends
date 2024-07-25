@@ -58,7 +58,7 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
     const CURRENT_COMPONENT_MAP: Record<CurrentComponent, ReactElement> = {
         graph: <Trends storesData={storesData} userSettings={userSettings}/>,
         insights: (
-            <Typography whiteSpace={'pre-line'}>
+            <Typography fontSize={18} whiteSpace={'pre-line'} paddingTop={4}>
                 {insights}
             </Typography>
         ),
@@ -81,12 +81,6 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
                 />
                 <CardContent sx={{paddingTop: 0, width: 700, height: 400}}>
                     <Grid container spacing={1}>
-                        {showCurrentPrice && <Grid item xs={12}>
-                            <Typography>{CHART.CURRENT_PRICE_TEXT
-                                .replace('{currentPrice}', cheapestStorePrice.toString())
-                                .replace('{cheapestStoreName}', cheapestStoreName)
-                            }</Typography>
-                        </Grid>}
                         {showMinPrice && <Grid item xs={6}>
                             <Typography>{CHART.MIN_PRICE_TEXT.replace('{minPrice}', minPrice?.toString())}</Typography>
                         </Grid>}
@@ -98,6 +92,12 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
                         </Grid>}
                         {showStandardDeviation && <Grid item xs={6}>
                             <Typography>{CHART.STANDARD_DEVIATION_TEXT.replace('{standardDeviation}', standardDeviation?.toString())}</Typography>
+                        </Grid>}
+                        {showCurrentPrice && <Grid item xs={12}>
+                            <Typography>{CHART.CURRENT_PRICE_TEXT
+                                .replace('{currentPrice}', cheapestStorePrice.toString())
+                                .replace('{cheapestStoreName}', cheapestStoreName)
+                            }</Typography>
                         </Grid>}
                         <Grid item xs={12}>
                             <Divider sx={{borderWidth:1}}/>
