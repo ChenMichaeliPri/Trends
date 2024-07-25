@@ -10,7 +10,7 @@ type LineChartProps={
   userSettings :UserSettings
 }
 
-export const Chart = ({storesData, userSettings}:LineChartProps) => {
+export const Trends = ({storesData, userSettings}:LineChartProps) => {
   const filterStores = useFilterStores(userSettings)
 
   return (
@@ -28,7 +28,6 @@ export const Chart = ({storesData, userSettings}:LineChartProps) => {
           <Legend/>
         </LineChart>
       </ResponsiveContainer>)}
-      <></>
     </>
   );
 }

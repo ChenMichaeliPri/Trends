@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ComponentProps, ReactElement} from "react";
-import {Chart} from "../charts/LineChart";
+import {Trends} from "../charts/Trends";
 import {Histogram} from "../charts/Histogram";
 import {Settings} from "../settings/Settings"
 import {MAIN_PAGE} from "./mainPage.constants";
@@ -56,7 +56,7 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
     } = pricesData;
 
     const CURRENT_COMPONENT_MAP: Record<CurrentComponent, ReactElement> = {
-        graph: <Chart storesData={storesData} userSettings={userSettings}/>,
+        graph: <Trends storesData={storesData} userSettings={userSettings}/>,
         insights: (
             <Typography whiteSpace={'pre-line'}>
                 {insights}
