@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { DB_QUERIES } from "../db/consts";
 import { MySQLRowDataPacket } from "@fastify/mysql";
+import { PriceRecord, Product, ProductShop, ProductShops, Shop } from "../data-models/sql-data-models";
 
 export const getProducts = async (fastify: FastifyInstance, id: number | null = null, name: string | null = null): Promise<Product[]> => {
     try {
