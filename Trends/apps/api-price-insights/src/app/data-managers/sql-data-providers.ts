@@ -103,7 +103,7 @@ export const getPriceRecords = async (
     toDate: Date | null = new Date()
 ): Promise<PriceRecord[]> => {
     try {
-        const records = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getRecordQuery()))[0];
+        const records = (await fastify.mysql.execute<MySQLRowDataPacket[]>(DB_QUERIES.getRecordQuery(productId, shopId, fromDate, toDate)))[0];
         return records.map(p => {
             return { 
                 id: p.price_record_id,
