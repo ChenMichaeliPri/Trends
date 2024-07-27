@@ -1,3 +1,5 @@
+import { PriceRecord } from "../../data-models/sql-data-models";
+
 export interface ProductInsights {
     productId: number;
     min: number;

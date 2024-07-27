@@ -1,15 +1,15 @@
-interface Product {
+export interface Product {
     id: number;
     name: string;
     insights: string; // Stores a valid JSON string
 }
 
-interface Shop {
+export interface Shop {
     id: number;
     name: string;
 }
 
-interface ProductShops {
+export interface ProductShops {
     productId: number;
     shopIds: number[];
 }
@@ -22,7 +22,7 @@ export interface PriceRecord {
     timestamp: Date;
 }
 
-interface ProductShop { // Represent a product that is selled in a store
+export interface ProductShop { // Represent a product that is selled in a store
     productId: number;
     shopId: number;
 }

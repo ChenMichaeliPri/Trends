@@ -1,3 +1,5 @@
+import { PriceRecord, Product, Shop } from "../data-models/sql-data-models";
+
 export const DB_QUERIES = {
     createProductTable : `
     CREATE TABLE product (

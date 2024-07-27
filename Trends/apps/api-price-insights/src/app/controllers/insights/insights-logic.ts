@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { variance, mean } from "mathjs";
 import { ProductInsights } from './types';
 import { IN_MONTH_PERIOD_MAPPING, MONTH_MAPPING, AVERAGE_PRICE_STATUS, DISTRIBUTION_CHUNK_SIZE, YEARS_TO_MEASURE_DISTRIBUTION } from "./consts";
+import { PriceRecord, Shop } from '../../data-models/sql-data-models';
 
 const getInMonthPeriod = (day: number): string => {
     if (day < IN_MONTH_PERIOD_MAPPING.BEGINNING_DAY) {

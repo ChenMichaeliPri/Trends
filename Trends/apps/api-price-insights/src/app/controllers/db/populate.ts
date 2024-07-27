@@ -2,6 +2,7 @@ import { MySQLPromisePool } from '@fastify/mysql'
 import { DB_QUERIES } from '../../db/consts';
 import * as fs from 'fs';
 import * as readline from 'readline';
+import { PriceRecord, Product, Shop } from '../../data-models/sql-data-models';
 
 declare module 'fastify' {
     interface FastifyInstance {
