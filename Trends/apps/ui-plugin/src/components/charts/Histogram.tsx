@@ -1,8 +1,9 @@
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 import { useFilterStores } from './hooks/useFilterStores';
-import { shopIdToNameMap } from "./charts.constants";
+import {CHART, shopIdToNameMap } from "./charts.constants";
 import { HistogramData } from './charts.types';
 import { UserSettings } from '../settings/settings.types';
+import {Typography} from "@mui/material";
 
 type HistogramProps = {
   histogramData: HistogramData;
@@ -39,8 +40,9 @@ export const Histogram = ({ histogramData, userSettings }: HistogramProps) => {
 
   return (
     <>
+      <Typography fontWeight="bold" >{CHART.HISTOGRAM_HEADER}</Typography>
       {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData) &&
-      (<ResponsiveContainer width={'100%'} height={300}>
+      (<ResponsiveContainer width={'100%'} height={270}>
         <BarChart data={Object.entries(binCounts).flatMap(([storeId, bins]) =>
           bins.map(bin => ({
             bin: bin.bin,
@@ -55,12 +57,10 @@ export const Histogram = ({ histogramData, userSettings }: HistogramProps) => {
           >
             <Label offset={-10} position="insideBottom" />
           </XAxis>
-          <YAxis name="Count">
-            <Label value="Count" angle={-90} position="insideLeft" offset={10} />
+          <YAxis name="Price">
+            <Label value="Weeks" angle={-90} position="insideLeft" offset={10} />
           </YAxis>
-          <Tooltip
-            formatter={(value: number | string) => new Intl.NumberFormat('en').format(Number(value))}
-          />
+          <Tooltip/>
           <Legend  />
           {Object.entries(shopIdToNameMap).filter(([storeId]) =>
           filterStores(storeId)
@@ -74,7 +74,6 @@ export const Histogram = ({ histogramData, userSettings }: HistogramProps) => {
                 ))}
         </BarChart>
       </ResponsiveContainer>)}
-      <></>
     </>
   );
 };

@@ -58,9 +58,12 @@ export const MainPage = ({productName, currentComponent, setCurrentComponent, in
     const CURRENT_COMPONENT_MAP: Record<CurrentComponent, ReactElement> = {
         graph: <Trends storesData={storesData} userSettings={userSettings}/>,
         insights: (
-            <Typography fontSize={18} whiteSpace={'pre-line'} paddingTop={4}>
-                {insights}
+          <>
+            <Typography fontWeight="bold" >{CHART.INSIGHTS_HEADER}</Typography>
+            <Typography fontSize={18} whiteSpace={'pre-line'} paddingTop={3}>
+              {insights}
             </Typography>
+          </>
         ),
         histogram: <Histogram histogramData={histogramData} userSettings={userSettings}/>
     }

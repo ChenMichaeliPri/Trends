@@ -1,9 +1,10 @@
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
-import { shopIdToNameMap } from "./charts.constants";
+import {CHART, shopIdToNameMap } from "./charts.constants";
 import { useFilterStores } from './hooks/useFilterStores';
 import { StoresData } from './charts.types';
 import { UserSettings } from '../settings/settings.types';
+import {Typography} from "@mui/material";
 
 type LineChartProps={
   storesData:StoresData,
@@ -15,8 +16,9 @@ export const Trends = ({storesData, userSettings}:LineChartProps) => {
 
   return (
     <>
+      <Typography fontWeight="bold" >{CHART.TRENDS_HEADER}</Typography>
       {(userSettings.showAmazonData || userSettings.showIvoryData || userSettings.showKSPData ) &&
-      (<ResponsiveContainer width={'100%'} height={300} >
+      (<ResponsiveContainer width={'100%'} height={270} >
         <LineChart>
           {Object.entries(storesData).filter(([storeId])=>filterStores(storeId)).map(([shopId, data]) => (
             <Line data={data} name={shopIdToNameMap[shopId].storeName} dataKey="price" stroke={shopIdToNameMap[shopId].lineColor} key={shopId} dot={false}/>
