@@ -10,14 +10,15 @@ import {pricesDataMock, storesDataMock, histogramDataMock} from "../charts/chart
 import {getPrices} from "../../api/prices/prices";
 import {CurrentComponent} from "./mainPage.types";
 
-export const useMainPage = (): MainPageProps & { isLoading: boolean } => {
+export const useMainPage = (): MainPageProps & { isLoading: boolean , isError?:boolean } => {
     const [currentComponent, setCurrentComponent] = useState<CurrentComponent>('graph')
     const {openSettings, formState, ...settingsProps} = useSettings()
     const [productId, setProductId] = useState('')
     const [productName, setProductName] = useState('')
     const [initialLoading, setInitialLoading] = useState(true);
+    const [isURLError, setIsURLError] = useState(false);
 
-    const {data: insightsData, isLoading: isInsightsDataLoading} = useQuery({
+    const {data: insightsData, isLoading: isInsightsDataLoading,isError:isInsightsError} = useQuery({
             queryKey: ['insights', productId],
             queryFn: () => getInsights(productId),
             select: (data) => insightsDataAdapter(data),
@@ -26,7 +27,7 @@ export const useMainPage = (): MainPageProps & { isLoading: boolean } => {
         }
     )
 
-    const {data: storesData, isLoading: isStoresDataLoading} = useQuery({
+    const {data: storesData, isLoading: isStoresDataLoading,isError:isStoresError} = useQuery({
             queryKey: ['prices', productId],
             queryFn: () => getPrices(productId),
             select: (data) => pricesDataAdapter(data),
@@ -43,9 +44,14 @@ export const useMainPage = (): MainPageProps & { isLoading: boolean } => {
                 console.log(`Current URL: ${response.url}`);
                 const parsedUrl = new URL(response.url);
                 const searchParams = new URLSearchParams(parsedUrl.search)
-                const parsedName = searchParams.get('productName')?.replace(/-/g,' ').replace(/\b\w/g, char => char.toUpperCase());
-                setProductId(searchParams.get('productId') || '')
-                setProductName(parsedName || 'Cant find query params')
+                if(searchParams.get('productId') && searchParams.get('productName')){
+                  const parsedName = searchParams.get('productName')?.replace(/-/g,' ').replace(/\b\w/g, char => char.toUpperCase());
+                  setProductId(searchParams.get('productId') || '')
+                  setProductName(parsedName || 'Cant find query params')
+                }
+                else{
+                  setIsURLError(true)
+                }
             }
         });
         if (!chrome?.runtime) {
@@ -68,6 +74,7 @@ export const useMainPage = (): MainPageProps & { isLoading: boolean } => {
         openSettings,
         userSettings: formState,
         settingsProps: {...settingsProps, formState},
-        isLoading: initialLoading || isInsightsDataLoading || isStoresDataLoading
+        isLoading: initialLoading || isInsightsDataLoading || isStoresDataLoading,
+        isError:isURLError || isInsightsError || isStoresError
     }
 }
