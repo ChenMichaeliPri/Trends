@@ -16,7 +16,7 @@ export const SETTINGS = {
   GENERAL_SETTINGS:'General Settings',
   USE_DARK_MODE:'Dark Mode',
   PRICES:'Prices',
-  SHOW_CURRENT:'Current Price',
+  SHOW_CURRENT:'Current Best Price',
   SHOW_MIN:'Min',
   SHOW_MAX:'Max',
   SHOW_AVERAGE:'Average',
