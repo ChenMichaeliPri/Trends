@@ -6,6 +6,9 @@ export const CHART = {
   MAX_PRICE_TEXT:'Max Price: {maxPrice}$',
   AVERAGE_PRICE_TEXT:'Average Price: {averagePrice}$',
   STANDARD_DEVIATION_TEXT:'Standard Deviation: {standardDeviation}$',
+  HISTOGRAM_HEADER:'Histogram - Weekly Average Prices Over the Last Two Years',
+  TRENDS_HEADER:'Trends - Price Over Time',
+  INSIGHTS_HEADER:'Insights - Data Driven Recommendations'
 }
 
 export const shopIdToNameMap :Record< string, UIStore> ={
