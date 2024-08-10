@@ -15,7 +15,7 @@
   3. View one of the following components
     - Trends View: A graphical view of price records from the last year, showing the price trend.
     - Histogram View: A histogram of the average price per week of a product, indicating the uniqueness of the price.
-    - Insights View: Displays the pre-calculated insights for the viewed product, helping users decide on their next steps.
+    - Insights View: Displays the pre-calculated insights for the viewed product, provides a price prediction and helps users decide on their next steps.
 
   ### Our service
   1. Saves consumers money.
