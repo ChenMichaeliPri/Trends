@@ -1,0 +1,1 @@
+export { postInsightsHandler } from './insights';

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Price Trends",
+  "version": "1.0",
+  "description": "Price Trends extension",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "activeTab", "scripting","tabs"]
+}
