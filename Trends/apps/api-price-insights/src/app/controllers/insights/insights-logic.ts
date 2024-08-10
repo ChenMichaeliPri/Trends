@@ -3,6 +3,8 @@ import { variance, mean } from "mathjs";
 import { ProductInsights } from './types';
 import { IN_MONTH_PERIOD_MAPPING, MONTH_MAPPING, AVERAGE_PRICE_STATUS, DISTRIBUTION_CHUNK_SIZE, YEARS_TO_MEASURE_DISTRIBUTION } from "./consts";
 import { PriceRecord, Shop } from '../../data-models/sql-data-models';
+import { addDays, subDays } from 'date-fns';
+
 
 const getInMonthPeriod = (day: number): string => {
     if (day < IN_MONTH_PERIOD_MAPPING.BEGINNING_DAY) {
@@ -130,6 +132,61 @@ const getCheapestHighestPriceMonthData = (shopIds: number[], shopToPricesData: R
     return monthData;
 };
 
+const getExpectingPriceDrop = (
+    shopToPricesData: Record<number, PriceRecord[]>
+): string => {
+    try {
+        const today = new Date();
+        const oneYearAgo = subDays(today, 365);
+        const oneYearAgoStart = oneYearAgo;
+        const oneYearAgoEnd = addDays(oneYearAgo, 7);
+
+        let totalChange = 0;
+        let totalObservations = 0;
+
+        for (const shopId in shopToPricesData) {
+            const records = shopToPricesData[shopId];
+
+            // Filter records from one year ago to one year ago plus one week
+            const filteredRecords = records.filter(record => {
+                return record.timestamp >= oneYearAgoStart && record.timestamp <= oneYearAgoEnd;
+            });
+
+            // Sort records by timestamp to ensure chronological order
+            const sortedRecords = filteredRecords.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+            // Calculate price changes
+            for (let i = 1; i < sortedRecords.length; i++) {
+                const previousRecord = sortedRecords[i - 1];
+                const currentRecord = sortedRecords[i];
+
+                // Calculate the price change
+                const priceChange = currentRecord.price - previousRecord.price;
+                const daysDifference = (currentRecord.timestamp.getTime() - previousRecord.timestamp.getTime()) / (1000 * 60 * 60 * 24);
+
+                if (daysDifference > 0) {
+                    totalChange += priceChange / daysDifference; // Normalize change per day
+                    totalObservations++;
+                }
+            }
+        }
+
+        // Calculate average daily price change
+        const averageDailyChange = totalChange / totalObservations;
+
+        if (averageDailyChange > 0) {
+            return "The price is expected to go up in the next week.";
+        } else if (averageDailyChange < 0) {
+            return "The price is expected to go down in the next week.";
+        } else {
+            return "The price is expected to remain stable in the next week.";
+        }
+    }
+    catch (error) {
+        return "";
+    }
+};
+
 const getInsights = (
     average: number,
     standardDeviation: number,
@@ -143,6 +200,7 @@ const getInsights = (
     const cheapestPriceData = getCheapestPriceData(shopToCurrentPriceData);
     const currentToAverageStatus = getCurrentToAverageStatus(average, cheapestPriceData.price);
     const cheapestPriceShopName = getShopName(cheapestPriceData, dbShopsData);
+    const pricePrediction = getExpectingPriceDrop(shopToPricesData);
     const {percentsHigherThanCurrentPrice, shopToAveragesOfChunkedPrices} = getDistributionData(
         shopIds,
         shopToPricesData,
@@ -151,7 +209,7 @@ const getInsights = (
         YEARS_TO_MEASURE_DISTRIBUTION
     );
 
-    const promptText = `According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${Math.round(cheapestPriceData.price)}$.This is ${currentToAverageStatus} than the average price of ${average}$.This week the price is lower than ${percentsHigherThanCurrentPrice}% of the weeks for the past ${YEARS_TO_MEASURE_DISTRIBUTION} years.With a standard deviation of ${standardDeviation}$ from average, determine whether its worth waiting for a better deal.Usually the best time for purchase is ${recommendedInMonthPeriod} of ${MONTH_MAPPING[minMonthIndex]} with average price of ${minMonthPrice}$.Its advisable to avoid purchasing at ${MONTH_MAPPING[maxMonthIndex]} with average price of ${maxMonthPrice}$.`;
+    const promptText = `According to our data, the current best price is in ${cheapestPriceShopName} - approximately ${Math.round(cheapestPriceData.price)}$.This is ${currentToAverageStatus} than the average price of ${average}$.This week the price is lower than ${percentsHigherThanCurrentPrice}% of the weeks for the past ${YEARS_TO_MEASURE_DISTRIBUTION} years.With a standard deviation of ${standardDeviation}$ from average, determine whether its worth waiting for a better deal.Usually the best time for purchase is ${recommendedInMonthPeriod} of ${MONTH_MAPPING[minMonthIndex]} with average price of ${minMonthPrice}$.Its advisable to avoid purchasing at ${MONTH_MAPPING[maxMonthIndex]} with average price of ${maxMonthPrice}$. ${pricePrediction}`;
 
     return {promptText, histogramData: shopToAveragesOfChunkedPrices};
 };
