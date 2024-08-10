@@ -118,6 +118,7 @@ Under apps folder (in Trends project) we have 3 folders of 3 different services.
   - It identifies the cheapest store currently selling the product.
   - Another insight provided is the "rarity" of the price, which is determined by analyzing two years of weekly average prices.
   - For the histogram, the algorithm sorts prices into weekly buckets over two years, calculates the weekly average price, and determines the distribution of this price.
+  - For the price prediction, we check the weekly price changes of the next week a year ago, which can catch a sudden price drop/increase based on speciel occasions such as Black Friday.
   
   #### General Flow
   - The user visits a site that supports our plugin (such as the mock website).
